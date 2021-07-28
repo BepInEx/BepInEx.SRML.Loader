@@ -1,2 +1,2 @@
 # BepInEx.SRML.Loader
-MuseDash ModLoader loader plugin for BepInEx 
+SRML mod loader plugin for BepInEx
