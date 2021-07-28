@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using UnityEngine;
+using SRML.Utils;
 
 namespace SRML.SR.SaveSystem.Format
 {
@@ -73,7 +73,7 @@ namespace SRML.SR.SaveSystem.Format
                 }
                 catch (Exception e)
                 {
-                    Debug.Log($"Encountered exception {e}\nskipping loading {mod.modid} skipping {mod.byteLength} bytes in the stream");
+                    LogUtils.BepInExLog.LogMessage($"Encountered exception {e}\nskipping loading {mod.modid} skipping {mod.byteLength} bytes in the stream");
                     reader.BaseStream.Seek(start + mod.byteLength, SeekOrigin.Begin);
                 }
             }
@@ -95,7 +95,7 @@ namespace SRML.SR.SaveSystem.Format
                             data.Read(reader);
                             partialData[id] = data;
                         }
-                        else Debug.LogError("No partial data for data identifier type " + id.Type);
+                        else LogUtils.BepInExLog.LogError("No partial data for data identifier type " + id.Type);
                     }
                     if (version >= 3)
                     {
@@ -124,7 +124,7 @@ namespace SRML.SR.SaveSystem.Format
             foreach (var mod in segments)
             {
                 mod.Write(writer);
-                Debug.Log($"Saving mod {mod.modid} which is {mod.byteLength} bytes long");
+                LogUtils.BepInExLog.LogMessage($"Saving mod {mod.modid} which is {mod.byteLength} bytes long");
             }
 
             enumTranslator.Write(writer);

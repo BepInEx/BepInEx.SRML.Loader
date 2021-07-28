@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using SRML.Utils;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -152,6 +153,9 @@ namespace SRML.Console
         // DRAWS THE WINDOW
         private void OnGUI()
         {
+            if (GUI.skin == null)
+                return;
+
             Font font = GUI.skin.font;
             GUI.skin.font = consoleFont;
 
@@ -168,14 +172,14 @@ namespace SRML.Console
 
 
             // FORCES WINDOW TO CLOSE IF THE GAME IS LOADING
-            if (GameContext.Instance.AutoSaveDirector.IsLoadingGame() && showWindow)
+            if (GameContext.Instance?.AutoSaveDirector != null && GameContext.Instance.AutoSaveDirector.IsLoadingGame() && showWindow)
             {
                 SetWindowOff();
             }
 
 
             // LISTENS TO MAIN INPUT
-            if (Event.current.isKey && Event.current.type == EventType.KeyDown)
+            if (Event.current != null && Event.current.isKey && Event.current.type == EventType.KeyDown)
             {
                 // TOGGLES THE WINDOW
                 if ((Event.current.modifiers == EventModifiers.Control || Event.current.modifiers == EventModifiers.Command) && Event.current.keyCode == KeyCode.Tab && !GameContext.Instance.AutoSaveDirector.IsLoadingGame())

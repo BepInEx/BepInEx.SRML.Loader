@@ -1,10 +1,14 @@
 ﻿using System.Text;
-using UnityEngine;
+using BepInEx.Logging;
+using Logger = BepInEx.Logging.Logger;
+
 namespace SRML.Utils
 {
     public static class LogUtils
     {
         private static StringBuilder currentBuilder;
+
+        public static ManualLogSource BepInExLog = Logger.CreateLogSource("SRML");
 
         public static void OpenLogSession()
         {
@@ -19,7 +23,7 @@ namespace SRML.Utils
             }
             else
             {
-                Debug.Log(b);
+                BepInExLog.LogMessage(b);
             }
         }
 
@@ -27,7 +31,7 @@ namespace SRML.Utils
         {
             if (currentBuilder != null)
             {
-                Debug.Log(currentBuilder.ToString());
+                LogUtils.BepInExLog.LogMessage(currentBuilder.ToString());
                 currentBuilder = null;
             }
         }

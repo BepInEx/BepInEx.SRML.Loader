@@ -1,7 +1,7 @@
 ﻿using SRML.Utils;
 using System;
 using System.IO;
-using UnityEngine;
+using BepInEx;
 
 namespace SRML
 {
@@ -44,7 +44,7 @@ namespace SRML
         /// <returns>The config path</returns>
         internal static String GetConfigPath(SRMod mod)
         {
-            return CheckDirectory(Path.Combine(Path.Combine(Application.persistentDataPath, "SRML/Config"),
+            return CheckDirectory(Path.Combine(Path.Combine(Paths.GameRootPath, "SRML/Config"),
                 mod?.ModInfo.Id ?? "SRML"));
         }
 

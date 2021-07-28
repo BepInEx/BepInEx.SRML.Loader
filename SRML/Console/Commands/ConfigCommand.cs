@@ -21,7 +21,7 @@ namespace SRML.Console.Commands
             if (args.Length >= 5)
             {
                 element.SetValue(element.Options.Parser.ParseObject(args[4]));
-                //Debug.Log(element.GetValue<object>()+" "+element.GetType()+"!");
+                //LogUtils.BepInExLog.LogMessage(element.GetValue<object>()+" "+element.GetType()+"!");
             }
             else
             {

@@ -3,6 +3,7 @@ using SRML.SR.SaveSystem.Data.Ammo;
 using SRML.SR.SaveSystem.Format;
 using System.Collections.Generic;
 using System.Linq;
+using SRML.Utils;
 using UnityEngine;
 
 namespace SRML.SR.SaveSystem
@@ -93,7 +94,7 @@ namespace SRML.SR.SaveSystem
                 }
                 catch
                 {
-                    Debug.LogError($"Error ocurred while attempting to resolve ammo identifier {v.Key.AmmoType} {v.Key.stringIdentifier}-{v.Key.longIdentifier}");
+                    LogUtils.BepInExLog.LogError($"Error ocurred while attempting to resolve ammo identifier {v.Key.AmmoType} {v.Key.stringIdentifier}-{v.Key.longIdentifier}");
                     invalidIdentifiers.Add(v.Key);
                 }
             }

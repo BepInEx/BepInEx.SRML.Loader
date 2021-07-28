@@ -6,7 +6,6 @@ using SRML.SR.Utils.BaseObjects;
 using SRML.Utils;
 using System;
 using System.Reflection;
-using UnityEngine;
 
 namespace SRML
 {
@@ -21,7 +20,7 @@ namespace SRML
         {
             if (isPreInitialized) return;
             isPreInitialized = true;
-            Debug.Log("SRML has successfully invaded the game!");
+            LogUtils.BepInExLog.LogMessage("SRML has successfully invaded the game!");
 
             foreach (var v in Assembly.GetExecutingAssembly().GetTypes())
             {
@@ -36,12 +35,11 @@ namespace SRML
             }
             catch (Exception e)
             {
-                Debug.LogError(e);
+                LogUtils.BepInExLog.LogError(e);
                 ErrorGUI.CreateError($"{e.GetType().Name}: {e.Message}");
                 return;
             }
-
-            FileLogger.Init();
+            
             Console.Console.Init();
             HarmonyOverrideHandler.PatchAll();
             try
@@ -50,7 +48,7 @@ namespace SRML
             }
             catch (Exception e)
             {
-                Debug.LogError(e);
+                LogUtils.BepInExLog.LogError(e);
                 ErrorGUI.CreateError($"{e.Message}");
                 return;
             }
@@ -84,7 +82,7 @@ namespace SRML
             }
             catch (Exception e)
             {
-                Debug.LogError(e);
+                LogUtils.BepInExLog.LogError(e);
                 ErrorGUI.CreateError($"{e.GetType().Name}: {e.Message}");
                 return;
             }
@@ -107,7 +105,7 @@ namespace SRML
             }
             catch (Exception e)
             {
-                Debug.LogError(e);
+                LogUtils.BepInExLog.LogError(e);
                 ErrorGUI.CreateError($"{e.GetType().Name}: {e.Message}");
                 return;
             }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using SRML.Utils;
 using UnityEngine;
 
 namespace SRML.SR.Templates
@@ -12,7 +13,7 @@ namespace SRML.SR.Templates
         {
             if (actions.ContainsKey(ID))
             {
-                UnityEngine.Debug.LogError($"The template action with id '<color=white>{ID}</color>' is already registered");
+                LogUtils.BepInExLog.LogError($"The template action with id '<color=white>{ID}</color>' is already registered");
                 return;
             }
 

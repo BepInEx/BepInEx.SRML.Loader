@@ -6,6 +6,7 @@ using SRML.SR.SaveSystem.Format;
 using SRML.SR.SaveSystem.Utils;
 using System;
 using System.Collections.Generic;
+using SRML.Utils;
 using UnityEngine;
 
 namespace SRML.SR.SaveSystem
@@ -25,7 +26,7 @@ namespace SRML.SR.SaveSystem
             Clear();
             foreach (var mod in data.segments)
             {
-                Debug.Log($"mod {mod.modid} has {mod.extendedData.Count} extended actor datas");
+                LogUtils.BepInExLog.LogMessage($"mod {mod.modid} has {mod.extendedData.Count} extended actor datas");
                 foreach (var extendedDataTree in mod.extendedData)
                 {
                     switch (extendedDataTree.idType)

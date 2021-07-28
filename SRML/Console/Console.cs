@@ -3,6 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
+using BepInEx;
+using BepInEx.Logging;
+using SRML.Utils;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -19,7 +22,7 @@ namespace SRML.Console
 
         // LOG STUFF
         internal static string unityLogFile = Path.Combine(Application.persistentDataPath, "Player.log");
-        internal static string srmlLogFile = Path.Combine(Application.persistentDataPath, "SRML/srml.log");
+        internal static string srmlLogFile = Path.Combine(Paths.BepInExRootPath, "LogOutput.log");
         private static readonly Console console = new Console();
 
         // COMMAND STUFF
@@ -165,7 +168,7 @@ namespace SRML.Console
         /// <param name="logToFile">Should log to file?</param>
         public static void Log(string message, bool logToFile = true)
         {
-            console.LogEntry(LogType.Log, message, logToFile);
+            console.LogEntry(LogLevel.Info, message, true);
         }
 
         /// <summary>
@@ -175,7 +178,7 @@ namespace SRML.Console
         /// <param name="logToFile">Should log to file?</param>
         public static void LogSuccess(string message, bool logToFile = true)
         {
-            console.LogEntry(LogType.Log, $"<color=#AAFF99>{message}</color>", logToFile);
+            console.LogEntry(LogLevel.Info, $"<color=#AAFF99>{message}</color>", true);
         }
 
         /// <summary>
@@ -185,7 +188,7 @@ namespace SRML.Console
         /// <param name="logToFile">Should log to file?</param>
         public static void LogWarning(string message, bool logToFile = true)
         {
-            console.LogEntry(LogType.Warning, message, logToFile);
+            console.LogEntry(LogLevel.Warning, message, true);
         }
 
         /// <summary>
@@ -195,7 +198,7 @@ namespace SRML.Console
         /// <param name="logToFile">Should log to file?</param>
         public static void LogError(string message, bool logToFile = true)
         {
-            console.LogEntry(LogType.Error, message, logToFile);
+            console.LogEntry(LogLevel.Error, message, true);
         }
 
         // PROCESSES THE TEXT FROM THE CONSOLE INPUT
@@ -256,7 +259,7 @@ namespace SRML.Console
             }
             catch (Exception e)
             {
-                Debug.LogException(e);
+                LogUtils.BepInExLog.LogError(e);
             }
         }
 
@@ -275,16 +278,16 @@ namespace SRML.Console
         }
 
         // CONVERTS LOG TYPE TO A SMALLER MORE READABLE TYPE
-        private string TypeToText(LogType logType)
+        private string TypeToText(LogLevel logType)
         {
-            if (logType == LogType.Error || logType == LogType.Exception)
+            if (logType == LogLevel.Error)
                 return "ERRO";
 
-            return logType == LogType.Warning ? "WARN" : "INFO";
+            return logType == LogLevel.Warning ? "WARN" : "INFO";
         }
 
         // LOGS A NEW ENTRY
-        private void LogEntry(LogType logType, string message, bool logToFile)
+        private void LogEntry(LogLevel logType, string message, bool logToBepInEx)
         {
             string type = TypeToText(logType);
             string color = "white";
@@ -294,9 +297,9 @@ namespace SRML.Console
             if (lines.Count >= MAX_ENTRIES)
                 lines.RemoveRange(0, 10);
 
-            lines.Add($"<color=cyan>[{DateTime.Now.ToString("HH:mm:ss")}]</color><color={color}>[{type}] {Regex.Replace(message, @"<material[^>]*>|<\/material>|<size[^>]*>|<\/size>|<quad[^>]*>|<b>|<\/b>", "")}</color>");
+            lines.Add($"<color=cyan>[{DateTime.Now:HH:mm:ss}]</color><color={color}>[{type}] {Regex.Replace(message, @"<material[^>]*>|<\/material>|<size[^>]*>|<\/size>|<quad[^>]*>|<b>|<\/b>", "")}</color>");
 
-            if (logToFile)
+            if (logToBepInEx)
                 FileLogger.LogEntry(logType, message);
 
             ConsoleWindow.updateDisplay = true;
@@ -342,7 +345,27 @@ namespace SRML.Console
             if (!trace.Equals(string.Empty))
                 toDisplay += "\n" + trace;
 
-            LogEntry(type, Regex.Replace(toDisplay, @"\[INFO]\s|\[ERROR]\s|\[WARNING]\s", ""), true);
+            LogLevel logLevel;
+
+            switch (type)
+            {
+                case LogType.Log:
+                default:
+                    logLevel = LogLevel.Info;
+                    break;
+                case LogType.Warning:
+                    logLevel = LogLevel.Warning;
+                    break;
+                case LogType.Assert:
+                    logLevel = LogLevel.Debug;
+                    break;
+                case LogType.Error:
+                case LogType.Exception:
+                    logLevel = LogLevel.Error;
+                    break;
+            }
+
+            LogEntry(logLevel, Regex.Replace(toDisplay, @"\[INFO]\s|\[ERROR]\s|\[WARNING]\s", ""), false);
         }
     }
 }

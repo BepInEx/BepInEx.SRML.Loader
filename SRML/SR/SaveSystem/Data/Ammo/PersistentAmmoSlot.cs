@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using SRML.Utils;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using UnityEngine;
 
 namespace SRML.SR.SaveSystem.Data.Ammo
 {
@@ -57,7 +57,7 @@ namespace SRML.SR.SaveSystem.Data.Ammo
         {
             if (realAmount - Count != 0)
             {
-                if (log) Debug.Log("Compensating for an apparent ammo difference of " + (realAmount - Count) + " real amount: " + realAmount + " current count: " + Count);
+                if (log) LogUtils.BepInExLog.LogMessage("Compensating for an apparent ammo difference of " + (realAmount - Count) + " real amount: " + realAmount + " current count: " + Count);
             }
 
             while (realAmount > Count)

@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using UnityEngine;
+using SRML.Utils;
 using Game = MonomiPark.SlimeRancher.Persist.GameV12;
 using VanillaActorData = MonomiPark.SlimeRancher.Persist.ActorDataV09;
 using VanillaGadgetData = MonomiPark.SlimeRancher.Persist.PlacedGadgetV08;
@@ -112,7 +112,7 @@ namespace SRML.SR.SaveSystem
                     }
                     else
                     {
-                        Debug.LogError("Unknown ammo identifier, skipping...");
+                        LogUtils.BepInExLog.LogError("Unknown ammo identifier, skipping...");
                     }
                 }
             }
@@ -239,7 +239,7 @@ namespace SRML.SR.SaveSystem
 
         private static void PushSegmentFullData(Game game, ModDataSegment mod)
         {
-            Debug.Log($"Splicing data from mod {mod.modid} which has {mod.identifiableData.Count} pieces of identifiable data");
+            LogUtils.BepInExLog.LogMessage($"Splicing data from mod {mod.modid} which has {mod.identifiableData.Count} pieces of identifiable data");
             foreach (var customData in mod.identifiableData)
             {
                 switch (customData.dataID.Type)
@@ -318,7 +318,7 @@ namespace SRML.SR.SaveSystem
             var storageprovider = director.StorageProvider as FileStorageProvider;
             if (storageprovider == null) return;
             var modpath = GetModdedPath(storageprovider, savename);
-            Debug.Log(modpath + " is our modded path");
+            LogUtils.BepInExLog.LogMessage(modpath + " is our modded path");
             ClearAllNonData();
             if (!File.Exists(modpath)) return;
 
@@ -338,7 +338,7 @@ namespace SRML.SR.SaveSystem
             var storageprovider = director.StorageProvider as FileStorageProvider;
             if (storageprovider == null) return;
             var modpath = GetModdedPath(storageprovider, nextfilename);
-            Debug.Log(modpath + " is our modded path");
+            LogUtils.BepInExLog.LogMessage(modpath + " is our modded path");
             PullModdedData(data, director.SavedGame.gameState);
             data.InitializeEnumTranslator();
             data.FixAllEnumValues(EnumTranslator.TranslationMode.TOTRANSLATED);

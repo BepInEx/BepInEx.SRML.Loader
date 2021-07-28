@@ -1,6 +1,6 @@
 ﻿using IniParser.Model;
 using System.Collections.Generic;
-using UnityEngine;
+using SRML.Utils;
 
 namespace SRML.Config
 {
@@ -41,7 +41,7 @@ namespace SRML.Config
                 }
                 else
                 {
-                    Debug.LogWarning($"Unknown key {data.KeyName} in section! Ignoring...");
+                    LogUtils.BepInExLog.LogWarning($"Unknown key {data.KeyName} in section! Ignoring...");
                 }
             }
         }
@@ -56,7 +56,7 @@ namespace SRML.Config
                 commentList.Add(element.Value.Options.Parser.GetUsageString());
                 if (element.Value.Options.Comment != null) commentList.Add(element.Value.Options.Comment);
                 keyData.Comments = commentList;
-                if (!keys.AddKey(keyData)) Debug.LogWarning($"Key {element.Key} already present in section!");
+                if (!keys.AddKey(keyData)) LogUtils.BepInExLog.LogWarning($"Key {element.Key} already present in section!");
             }
         }
 

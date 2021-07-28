@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
-using UnityEngine;
+using BepInEx;
 
 namespace SRML.Console
 {
@@ -11,7 +11,7 @@ namespace SRML.Console
     public static class ConsoleBinder
     {
         // BINDING FILE
-        internal static string bindFile = Path.Combine(Application.persistentDataPath, "SRML/userbinds.bindings");
+        internal static string bindFile = Path.Combine(Paths.GameRootPath, "SRML/userbinds.bindings");
 
         /// <summary>
         /// Reads all bindings

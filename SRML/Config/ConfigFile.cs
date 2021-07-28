@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using UnityEngine;
+using SRML.Utils;
 
 namespace SRML.Config
 {
@@ -42,7 +42,7 @@ namespace SRML.Config
                 }
                 else
                 {
-                    Debug.LogWarning($"Unknown section {section.SectionName} in data! Ignoring...");
+                    LogUtils.BepInExLog.LogWarning($"Unknown section {section.SectionName} in data! Ignoring...");
                 }
             }
         }

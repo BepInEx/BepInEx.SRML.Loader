@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
+using SRML.Utils;
 
 namespace SRML.SR
 {
@@ -10,7 +10,6 @@ namespace SRML.SR
     /// </summary>
     public static class TranslationPatcher
     {
-
         internal static Dictionary<string, Dictionary<string, string>> doneDictionaries = new Dictionary<string, Dictionary<string, string>>();
 
         internal static Dictionary<string, Dictionary<string, string>> patches = new Dictionary<string, Dictionary<string, string>>();
@@ -24,7 +23,9 @@ namespace SRML.SR
 
         internal static void AddTranslationKey(string bundlename, string key, string value, SRMod mod)
         {
-            if (GetPatchesFor(bundlename).ContainsKey(key)) Debug.LogWarning($"Translation key '{key}' for bundle '{bundlename}' is already taken by {keyToMod[new KeyValuePair<string, string>(bundlename, key)]}! Overwriting...");
+            if (GetPatchesFor(bundlename).ContainsKey(key))
+                LogUtils.BepInExLog.LogWarning($"Translation key '{key}' for bundle '{bundlename}' is already taken by {keyToMod[new KeyValuePair<string, string>(bundlename, key)]}! Overwriting...");
+            
             GetPatchesFor(bundlename)[key] = value;
             SetModForTranslationKey(bundlename, key, mod);
         }

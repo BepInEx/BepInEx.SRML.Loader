@@ -1,5 +1,5 @@
 ﻿using HarmonyLib;
-using System.Reflection;
+using SRML.Patches;
 
 namespace SRML
 {
@@ -8,29 +8,11 @@ namespace SRML
     /// </summary>
     public static class HarmonyPatcher
     {
-        private static Harmony _instance;
-
-        internal static Harmony Instance
-        {
-            get
-            {
-                if (_instance == null)
-                {
-                    InitializeInstance();
-                }
-
-                return _instance;
-            }
-        }
-
-        static void InitializeInstance()
-        {
-            _instance = new Harmony("net.veesus.srml");
-        }
+        internal static Harmony Instance { get; } = new Harmony("net.veesus.srml");
 
         internal static void PatchAll()
         {
-            Instance.PatchAll(Assembly.GetExecutingAssembly());
+            Instance.PatchAll(typeof(EnumInfoPatch));
         }
 
         public static Harmony SetInstance(string name)
