@@ -1,6 +1,8 @@
 # BepInEx.SRML.Loader
 SRML mod loader plugin for BepInEx
 
+![image](https://user-images.githubusercontent.com/36346617/127376169-eff2927e-2e8e-4d84-b2c7-555f5a0e6c12.png)
+
 This plugin is a bootstrap for SRML to launch instead of requiring it to be installed into Slime Rancher's game files. Many components (like logging) have been altered to use BepInEx's internal systems instead of writing directly to a file.
 
 Why is this better than what SRML already does?
