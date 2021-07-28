@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Reflection.Emit;
-using System.Text;
-using HarmonyLib;
+﻿using HarmonyLib;
 using MonomiPark.SlimeRancher;
 using MonomiPark.SlimeRancher.DataModel;
 using SRML.SR.SaveSystem.Data.Actor;
-using UnityEngine;
+using System.Collections.Generic;
+using System.Reflection;
+using System.Reflection.Emit;
 using VanillaActorData = MonomiPark.SlimeRancher.Persist.ActorDataV09;
 
 namespace SRML.SR.SaveSystem.Patches
@@ -25,7 +21,7 @@ namespace SRML.SR.SaveSystem.Patches
         {
             var mod = SaveRegistry.ModForModelType(actorModel.GetType());
             if (mod != null)
-            {  
+            {
                 var info = SaveRegistry.GetSaveInfo(mod).GetRegistryFor<CustomActorData>();
                 var newmodel = info.GetDataForID(info.GetIDForModel(actorModel.GetType()));
                 newmodel.PullCustomModel(actorModel);
@@ -43,8 +39,8 @@ namespace SRML.SR.SaveSystem.Patches
                 yield return new CodeInstruction(OpCodes.Ldarg_1);
                 yield return new CodeInstruction(OpCodes.Ldarg_2);
                 yield return new CodeInstruction(OpCodes.Ldarg_3);
-                yield return new CodeInstruction(OpCodes.Ldarg_S,(byte)4);
-                yield return new CodeInstruction(OpCodes.Call,AccessTools.Method(typeof(BuildActorDataPatch),"ActorCreator"));
+                yield return new CodeInstruction(OpCodes.Ldarg_S, (byte)4);
+                yield return new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(BuildActorDataPatch), "ActorCreator"));
                 while (code.MoveNext())
                 {
                     yield return code.Current;
@@ -53,6 +49,6 @@ namespace SRML.SR.SaveSystem.Patches
 
         }
 
-       
+
     }
 }

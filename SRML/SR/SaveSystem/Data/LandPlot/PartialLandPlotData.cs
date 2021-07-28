@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using MonomiPark.SlimeRancher.Persist;
-using SRML.SR.SaveSystem.Data.Partial;
+﻿using SRML.SR.SaveSystem.Data.Partial;
 using SRML.SR.SaveSystem.Format;
 using SRML.Utils;
-using UnityEngine;
+using System.IO;
 using VanillaLandPlotData = MonomiPark.SlimeRancher.Persist.LandPlotV08;
 namespace SRML.SR.SaveSystem.Data.LandPlot
 {
@@ -69,13 +63,13 @@ namespace SRML.SR.SaveSystem.Data.LandPlot
 
         static PartialLandPlotData()
         {
-            EnumTranslator.RegisterEnumFixer<PartialLandPlotData>((translator, mode, data) => 
+            EnumTranslator.RegisterEnumFixer<PartialLandPlotData>((translator, mode, data) =>
             {
                 translator.FixEnumValues(mode, data.upgrades);
                 while (data.upgrades.InternalList.Contains(global::LandPlot.Upgrade.NONE)) data.upgrades.InternalList.Remove(global::LandPlot.Upgrade.NONE);
                 data.attachedId = translator.TranslateEnum(mode, data.attachedId);
             });
-            
+
             PartialData.RegisterPartialData(() => new PartialLandPlotData());
         }
     }

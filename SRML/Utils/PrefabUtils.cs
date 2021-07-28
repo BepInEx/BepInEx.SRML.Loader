@@ -1,8 +1,7 @@
-﻿using System;
+﻿using SRML.Editor;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using SRML.Editor;
 using UnityEngine;
 
 namespace SRML.Utils
@@ -12,26 +11,26 @@ namespace SRML.Utils
         static List<KeyValuePair<GameObject, IFieldReplacer>> replacers = new List<KeyValuePair<GameObject, IFieldReplacer>>();
         public static void FixPrefabFields(GameObject prefab, IFieldReplacer replacer)
         {
-            replacers.Add(new KeyValuePair<GameObject, IFieldReplacer>(prefab,replacer));
+            replacers.Add(new KeyValuePair<GameObject, IFieldReplacer>(prefab, replacer));
         }
 
         internal static void ProcessReplacements()
         {
-            replacers.ForEach((x)=>FixPrefabFieldsInternal(x.Key,x.Value));
+            replacers.ForEach((x) => FixPrefabFieldsInternal(x.Key, x.Value));
         }
         static void FixPrefabFieldsInternal(GameObject prefab, IFieldReplacer replacementInfo)
         {
             var replacer = ReplacerCache.GetReplacer(replacementInfo);
 
-            var components = replacementInfo.ReplaceInChildren? prefab.GetComponentsInChildren<Component>(true):prefab.GetComponents<Component>();
+            var components = replacementInfo.ReplaceInChildren ? prefab.GetComponentsInChildren<Component>(true) : prefab.GetComponents<Component>();
 
             foreach (var comp in components)
             {
                 if (!comp) continue;
-                foreach (var field in replacer.FieldToField.Where((x)=>x.Value.DeclaringType==comp.GetType()))
+                foreach (var field in replacer.FieldToField.Where((x) => x.Value.DeclaringType == comp.GetType()))
                 {
-                    
-                    field.Value.SetValue(comp,field.Key.GetValue((replacer.InstanceInfo.Instance as GameObject).GetComponentInChildren(comp.GetType())));
+
+                    field.Value.SetValue(comp, field.Key.GetValue((replacer.InstanceInfo.Instance as GameObject).GetComponentInChildren(comp.GetType())));
 
                 }
             }
@@ -61,7 +60,7 @@ namespace SRML.Utils
                     {
                         T t = (T)field.GetValue(comp);
                         if (!t.Equals(original)) continue;
-                        field.SetValue(comp,newValue);
+                        field.SetValue(comp, newValue);
                     }
                 }
 
@@ -89,10 +88,10 @@ namespace SRML.Utils
                 System.Object ProcessObject(System.Object theObj)
                 {
                     if (theObj == null) return null;
-                    
+
                     if (typeof(Component).IsAssignableFrom(theObj.GetType()) || typeof(GameObject).IsAssignableFrom(theObj.GetType()))
                     {
-                        return theObj;  
+                        return theObj;
                         var newPref = CopyPrefab((typeof(Component).IsAssignableFrom(theObj.GetType())) ? (theObj as Component).gameObject : theObj as GameObject);
                         return (typeof(Component).IsAssignableFrom(theObj.GetType())) ? (System.Object)newPref.GetComponent(theObj.GetType()) : newPref;
                     }
@@ -108,22 +107,22 @@ namespace SRML.Utils
                         {
                             g.SetValue(ProcessObject(g.GetValue(i)), i);
                         }
-                        
+
                     }
-                    else if (!theObj.GetType().IsPrimitive&&!typeof(String).IsAssignableFrom(theObj.GetType())&&!theObj.GetType().IsEnum)
+                    else if (!theObj.GetType().IsPrimitive && !typeof(String).IsAssignableFrom(theObj.GetType()) && !theObj.GetType().IsEnum)
                     {
-                        foreach(var v in theObj.GetType().GetFields(System.Reflection.BindingFlags.Instance|System.Reflection.BindingFlags.Public))
+                        foreach (var v in theObj.GetType().GetFields(System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public))
                         {
                             v.SetValue(theObj, ProcessObject(v.GetValue(theObj)));
                         }
                     }
-                    
+
                     return theObj;
                 }
 
                 foreach (var v in newObj.GetType().GetFields())
                 {
-                    v.SetValue(newObj,ProcessObject(v.GetValue(newObj)));
+                    v.SetValue(newObj, ProcessObject(v.GetValue(newObj)));
                 }
                 return newObj;
             }

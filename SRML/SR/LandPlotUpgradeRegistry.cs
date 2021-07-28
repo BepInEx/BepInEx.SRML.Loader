@@ -1,8 +1,5 @@
 ﻿using SRML.SR.SaveSystem;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 
 namespace SRML.SR
@@ -10,7 +7,7 @@ namespace SRML.SR
     public static class LandPlotUpgradeRegistry
     {
         internal static IDRegistry<LandPlot.Upgrade> moddedUpgrades = new IDRegistry<LandPlot.Upgrade>();
-        
+
 
         static LandPlotUpgradeRegistry()
         {
@@ -27,9 +24,10 @@ namespace SRML.SR
 
         public static void RegisterPurchasableUpgrade<T>(UpgradeShopEntry entry) where T : LandPlotUI
         {
-            PurchasableUIRegistry.RegisterPurchasable<T>((x) => new PurchaseUI.Purchasable(entry.NameKey,entry.icon,entry.mainImg,entry.DescKey,entry.cost,entry.landplotPediaId,()=> {
+            PurchasableUIRegistry.RegisterPurchasable<T>((x) => new PurchaseUI.Purchasable(entry.NameKey, entry.icon, entry.mainImg, entry.DescKey, entry.cost, entry.landplotPediaId, () =>
+            {
                 x.Upgrade(entry.upgrade, entry.cost);
-            },entry.isUnlocked ?? (()=>true),()=>!x.activator.HasUpgrade(entry.upgrade)));
+            }, entry.isUnlocked ?? (() => true), () => !x.activator.HasUpgrade(entry.upgrade)));
         }
 
         public static void RegisterPlotUpgrader<T>(LandPlot.Id plot) where T : PlotUpgrader

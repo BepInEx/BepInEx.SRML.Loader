@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace SRML.SR
 {
@@ -38,7 +37,7 @@ namespace SRML.SR
                 return TranslationPatcher.GetModForKey(MAIL_BUNDLE, FromKey) ?? TranslationPatcher.GetModForKey(MAIL_BUNDLE, SubjectKey) ?? TranslationPatcher.GetModForKey(MAIL_BUNDLE, BodyKey);
             }
 
-            public MailEntry SetReadCallback(Action<MailDirector,MailDirector.Mail> onReadCallback)
+            public MailEntry SetReadCallback(Action<MailDirector, MailDirector.Mail> onReadCallback)
             {
                 this.onReadCallback = onReadCallback;
                 return this;
@@ -91,6 +90,6 @@ namespace SRML.SR
             return ModdedMails.FirstOrDefault((x) => x.MailKey == mailKey)?.GetMod();
         }
 
-        
+
     }
 }

@@ -1,9 +1,8 @@
-﻿using System;
+﻿using HarmonyLib;
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Reflection.Emit;
-using HarmonyLib;
-using UnityEngine;
 
 namespace SRML.Patches
 {
@@ -24,7 +23,7 @@ namespace SRML.Patches
             if (EnumPatcher.TryGetRawPatch(enumType, out var patch))
             {
 
-                patch.GetArrays(out string[] toBePatchedNames,out ulong[] toBePatchedValues);
+                patch.GetArrays(out string[] toBePatchedNames, out ulong[] toBePatchedValues);
                 Array.Resize(ref toBePatchedNames, toBePatchedNames.Length + oldNames.Length);
                 Array.Resize(ref toBePatchedValues, toBePatchedValues.Length + oldValues.Length);
                 Array.Copy(oldNames, 0, toBePatchedNames, toBePatchedNames.Length - oldNames.Length, oldNames.Length);
@@ -35,7 +34,7 @@ namespace SRML.Patches
                 Array.Sort<ulong, string>(oldValues, oldNames, Comparer<ulong>.Default);
             }
         }
-        
+
         static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
             using (var enumerator = instructions.GetEnumerator())
@@ -43,14 +42,14 @@ namespace SRML.Patches
                 while (enumerator.MoveNext())
                 {
                     var v = enumerator.Current;
-                    if (v.operand is MethodInfo me&&me.Name=="Sort")
+                    if (v.operand is MethodInfo me && me.Name == "Sort")
                     {
                         yield return v;
                         enumerator.MoveNext();
                         v = enumerator.Current;
                         var labels = v.labels;
                         v.labels = new List<Label>();
-                        yield return new CodeInstruction(OpCodes.Ldarg_0) { labels = labels};
+                        yield return new CodeInstruction(OpCodes.Ldarg_0) { labels = labels };
                         yield return new CodeInstruction(OpCodes.Ldloca, 1);
                         yield return new CodeInstruction(OpCodes.Ldloca, 2);
                         yield return new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(EnumInfoPatch), "FixEnum"));

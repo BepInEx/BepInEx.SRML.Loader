@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace SRML.SR.Translation
+﻿namespace SRML.SR.Translation
 {
     public class TutorialPediaEntryTranslation : PediaEntryTranslation
     {

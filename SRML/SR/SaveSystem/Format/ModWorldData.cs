@@ -1,10 +1,7 @@
-﻿using MonomiPark.SlimeRancher.Persist;
-using SRML.Utils;
-using System;
+﻿using SRML.Utils;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using VanillaWorldData = MonomiPark.SlimeRancher.Persist.WorldV22;
 
 namespace SRML.SR.SaveSystem.Format
@@ -13,7 +10,7 @@ namespace SRML.SR.SaveSystem.Format
     {
         public override int LatestVersion => 1;
 
-        Dictionary<Identifiable.Id,float> econSaturations = new Dictionary<Identifiable.Id, float>();
+        Dictionary<Identifiable.Id, float> econSaturations = new Dictionary<Identifiable.Id, float>();
         List<string> lastOfferRancherIds = new List<string>();
         List<string> pendingOfferRancherIds = new List<string>();
         static ModWorldData()
@@ -28,7 +25,7 @@ namespace SRML.SR.SaveSystem.Format
         {
             BinaryUtils.ReadDictionary(reader, econSaturations, (x) => (Identifiable.Id)x.ReadInt32(), (x) => x.ReadSingle());
             if (Version == 0) return;
-            BinaryUtils.ReadList(reader, lastOfferRancherIds,x=>x.ReadString());
+            BinaryUtils.ReadList(reader, lastOfferRancherIds, x => x.ReadString());
             BinaryUtils.ReadList(reader, pendingOfferRancherIds, x => x.ReadString());
         }
 
@@ -39,19 +36,19 @@ namespace SRML.SR.SaveSystem.Format
             BinaryUtils.WriteList(writer, pendingOfferRancherIds, (x, y) => x.Write(y));
         }
 
-        public void Pull(VanillaWorldData data,SRMod mod)
+        public void Pull(VanillaWorldData data, SRMod mod)
         {
-            foreach(var v in data.econSaturations)
+            foreach (var v in data.econSaturations)
             {
-                if (ModdedIDRegistry.ModForID(v.Key)==mod) econSaturations.Add(v.Key, v.Value);
+                if (ModdedIDRegistry.ModForID(v.Key) == mod) econSaturations.Add(v.Key, v.Value);
             }
-            pendingOfferRancherIds.AddRange(data.pendingOfferRancherIds.Where((x)=>ExchangeOfferRegistry.GetModForID(x)==mod));
+            pendingOfferRancherIds.AddRange(data.pendingOfferRancherIds.Where((x) => ExchangeOfferRegistry.GetModForID(x) == mod));
             lastOfferRancherIds.AddRange(data.lastOfferRancherIds.Where((x) => ExchangeOfferRegistry.GetModForID(x) == mod));
         }
 
         public void Push(VanillaWorldData data)
         {
-            foreach(var v in econSaturations)
+            foreach (var v in econSaturations)
             {
                 if (ModdedIDRegistry.IsValidID(v.Key)) data.econSaturations[v.Key] = v.Value;
             }
@@ -63,7 +60,7 @@ namespace SRML.SR.SaveSystem.Format
         {
             var set = new HashSet<SRMod>();
 
-            foreach(var v in data.econSaturations)
+            foreach (var v in data.econSaturations)
             {
                 set.Add(ModdedIDRegistry.ModForID(v.Key));
             }

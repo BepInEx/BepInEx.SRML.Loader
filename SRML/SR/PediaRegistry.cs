@@ -4,9 +4,7 @@ using SRML.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 using static SRML.SR.PediaRegistry.PediaTab;
 
@@ -22,13 +20,13 @@ namespace SRML.SR
         internal static Dictionary<PediaDirector.Id, PediaCategory> pediaMappings = new Dictionary<PediaDirector.Id, PediaCategory>();
         internal static Dictionary<PediaDirector.Id, IPediaRenderer> customPediaRenderers = new Dictionary<PediaDirector.Id, IPediaRenderer>();
         internal static Dictionary<PediaTab, SRMod> customTabs = new Dictionary<PediaTab, SRMod>();
-        
+
 
         internal static IPediaRenderer activeRenderer;
         internal static ITabRenderer activeTabRenderer;
 
         static Dictionary<DisplaySetting, DefaultPediaRenderer> defaultRenderers = new Dictionary<DisplaySetting, DefaultPediaRenderer>();
-        
+
         static PediaRegistry()
         {
             ModdedIDRegistry.RegisterIDRegistry(moddedIds);
@@ -36,11 +34,11 @@ namespace SRML.SR
 
         public static IPediaRenderer GetDefaultRenderer(DisplaySetting setting)
         {
-            if(!defaultRenderers.TryGetValue(setting, out var renderer))
+            if (!defaultRenderers.TryGetValue(setting, out var renderer))
             {
                 renderer = new DefaultPediaRenderer(setting);
                 defaultRenderers.Add(setting, renderer);
-                
+
             }
             return renderer;
         }
@@ -60,12 +58,12 @@ namespace SRML.SR
         {
             customEntries.Add(entry);
         }
-        
+
         public static void RegisterIdEntry(PediaDirector.Id id, Sprite icon)
         {
             RegisterIdEntry(new PediaDirector.IdEntry() { id = id, icon = icon });
         }
-        
+
         public static void RegisterRenderer(PediaDirector.Id id, IPediaRenderer renderer)
         {
             customPediaRenderers.Add(id, renderer);
@@ -74,7 +72,7 @@ namespace SRML.SR
 
         internal static IPediaRenderer GetRenderer(PediaDirector.Id id)
         {
-                if(!customPediaRenderers.TryGetValue(id, out var renderer))
+            if (!customPediaRenderers.TryGetValue(id, out var renderer))
             {
                 var tab = GetCustomPediaTab(id);
                 if (tab != null)
@@ -88,7 +86,7 @@ namespace SRML.SR
 
         internal static PediaTab GetCustomPediaTab(PediaDirector.Id id)
         {
-            foreach(var v in customTabs)
+            foreach (var v in customTabs)
             {
                 if (v.Key.Entries.Contains(id) || v.Key.ID == id) return v.Key;
             }
@@ -99,7 +97,7 @@ namespace SRML.SR
         {
             initialEntries.Add(id);
         }
-        
+
         public static void RegisterIdentifiableMapping(PediaDirector.IdentMapEntry entry)
         {
             customIdentifiableLinks.Add(entry);
@@ -143,7 +141,7 @@ namespace SRML.SR
             cat.Add(id);
             GetCategory(category) = cat.ToArray();
         }
- 
+
         public enum PediaCategory
         {
             TUTORIALS,
@@ -154,21 +152,21 @@ namespace SRML.SR
             SCIENCE
         }
 
-        public class DefaultPediaRenderer  : IReusablePediaRenderer
+        public class DefaultPediaRenderer : IReusablePediaRenderer
         {
             public DisplaySetting DisplaySetting { get; }
             public PediaDirector.Id CurrentID { get; set; }
             public DefaultPediaRenderer(DisplaySetting setting)
             {
                 DisplaySetting = setting;
-                
+
             }
 
             public virtual string GetLowerName()
             {
                 return CurrentID.ToString().ToLower();
             }
-            
+
             public void OnListingSelected(GameObject panelObj)
             {
                 var pedia = panelObj.GetComponentInParent<PediaUI>();
@@ -264,9 +262,9 @@ namespace SRML.SR
             public virtual Toggle.ToggleEvent GetOnSelectAction()
             {
                 var newAction = new Toggle.ToggleEvent();
-                newAction.AddListener((x)=>
+                newAction.AddListener((x) =>
                 {
-                    if(TabToggle?.isOn ?? false)
+                    if (TabToggle?.isOn ?? false)
                     {
                         TabToggle.GetComponentInParent<PediaUI>().SelectEntry(Entries[0], true, Entries[0]);
                     }
@@ -276,11 +274,11 @@ namespace SRML.SR
 
             public virtual Toggle GenerateTab(Toggle original)
             {
-                var newUI= GameObjectUtils.InstantiateInactive(original.gameObject);
+                var newUI = GameObjectUtils.InstantiateInactive(original.gameObject);
                 newUI.GetComponentInChildren<XlateText>(true).key = NameKey;
                 var toggle = newUI.GetComponent<Toggle>();
                 toggle.onValueChanged = GetOnSelectAction();
-                newUI.transform.SetParent(original.transform.parent,false);
+                newUI.transform.SetParent(original.transform.parent, false);
                 newUI.SetActive(true);
                 return toggle;
             }

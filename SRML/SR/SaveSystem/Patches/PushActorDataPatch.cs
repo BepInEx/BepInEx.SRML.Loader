@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Management.Instrumentation;
-using System.Reflection;
-using System.Reflection.Emit;
-using System.Text;
-using HarmonyLib;
+﻿using HarmonyLib;
 using MonomiPark.SlimeRancher;
 using MonomiPark.SlimeRancher.DataModel;
 using SRML.SR.SaveSystem.Data.Actor;
-using UnityEngine;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Reflection.Emit;
 using VanillaActorData = MonomiPark.SlimeRancher.Persist.ActorDataV09;
 namespace SRML.SR.SaveSystem.Patches
 {
@@ -50,13 +46,13 @@ namespace SRML.SR.SaveSystem.Patches
 
         public static void CheckModel(ActorModel model, VanillaActorData data)
         {
-            
+
             if (data is CustomActorData customData)
             {
                 customData.PushCustomModel(model);
             }
 
-            foreach(var v in DataModelRegistry.actorLoaders.Where(x => x.Key(model)))
+            foreach (var v in DataModelRegistry.actorLoaders.Where(x => x.Key(model)))
             {
                 v.Value(model, data);
             }

@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using MonomiPark.SlimeRancher.DataModel;
+﻿using MonomiPark.SlimeRancher.DataModel;
 using SRML.SR.SaveSystem.Data.Actor;
 using SRML.SR.SaveSystem.Data.Gadget;
 using SRML.SR.SaveSystem.Data.LandPlot;
 using SRML.SR.SaveSystem.Registry;
 using SRML.SR.SaveSystem.Utils;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using VanillaActorData = MonomiPark.SlimeRancher.Persist.ActorDataV09;
 using VanillaGadgetData = MonomiPark.SlimeRancher.Persist.PlacedGadgetV08;
@@ -17,11 +15,11 @@ namespace SRML.SR.SaveSystem
 {
     public static class SaveRegistry
     {
-        internal static Dictionary<SRMod,ModSaveInfo> modToSaveInfo = new Dictionary<SRMod, ModSaveInfo>();
+        internal static Dictionary<SRMod, ModSaveInfo> modToSaveInfo = new Dictionary<SRMod, ModSaveInfo>();
 
         internal static ModSaveInfo GetSaveInfo(SRMod mod)
         {
-            if (!modToSaveInfo.ContainsKey(mod)) modToSaveInfo.Add(mod,new ModSaveInfo());
+            if (!modToSaveInfo.ContainsKey(mod)) modToSaveInfo.Add(mod, new ModSaveInfo());
             return modToSaveInfo[mod];
         }
 
@@ -71,7 +69,7 @@ namespace SRML.SR.SaveSystem
         {
             if (!IsCustom(data)) return null;
             if (data is IDataRegistryMember model) return ModForModelType(model.GetModelType());
-            if (data is VanillaActorData actor) return ModdedIDRegistry.ModForID((Identifiable.Id) actor.typeId);
+            if (data is VanillaActorData actor) return ModdedIDRegistry.ModForID((Identifiable.Id)actor.typeId);
             if (data is VanillaGadgetData gadget) return ModdedIDRegistry.ModForID(gadget.gadgetId);
             if (data is VanillaLandPlotData plot) return ModdedIDRegistry.ModForID(plot.typeId);
             return null;
@@ -119,7 +117,7 @@ namespace SRML.SR.SaveSystem
                 if (tag.HasPiece(ExtendedDataUtils.GetParticipantName(typeof(T))))
                 {
                     obj.AddComponent<T>();
-                    
+
                 }
             };
         }

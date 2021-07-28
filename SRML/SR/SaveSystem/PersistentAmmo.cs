@@ -19,7 +19,7 @@ namespace SRML.SR.SaveSystem
 
         public void Sync(bool log = false)
         {
-            DataModel.UpdateFromExistingSlots(Identifier.ResolveModel().slots,log);
+            DataModel.UpdateFromExistingSlots(Identifier.ResolveModel().slots, log);
         }
 
         public void OnDecrement(int slot, int count)

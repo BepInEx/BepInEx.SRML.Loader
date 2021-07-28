@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace SRML.Config.Parsing
 {
@@ -19,7 +17,7 @@ namespace SRML.Config.Parsing
             if (array == null) array = Array.CreateInstance(ParsedType.GetElementType(), 0);
             IStringParser parser = ParserRegistry.GetParser(ParsedType.GetElementType());
             string str = "[";
-            for(int i = 0; i < array.Length; i++)
+            for (int i = 0; i < array.Length; i++)
             {
                 str += parser.EncodeObject(array.GetValue(i));
                 if (i != array.Length - 1) str += ", ";
@@ -34,7 +32,7 @@ namespace SRML.Config.Parsing
         }
 
         public object ParseObject(string str)
-        {   
+        {
             var parser = ParserRegistry.GetParser(ParsedType.GetElementType());
             str = str.Trim(' ', '[', ']');
             List<object> objs = new List<object>();
@@ -45,7 +43,7 @@ namespace SRML.Config.Parsing
 
 
             Array array = Array.CreateInstance(ParsedType.GetElementType(), objs.Count);
-            for(int i = 0; i < objs.Count; i++)
+            for (int i = 0; i < objs.Count; i++)
             {
                 array.SetValue(objs[i], i);
             }

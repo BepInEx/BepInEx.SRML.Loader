@@ -4,7 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 
 namespace SRML.SR.SaveSystem.Data.Partial
 {
@@ -29,29 +28,29 @@ namespace SRML.SR.SaveSystem.Data.Partial
 
             foreach (var v in data)
             {
-                if(hoistCondition(v)) hoistedValues.Add(v);
+                if (hoistCondition(v)) hoistedValues.Add(v);
             }
 
             foreach (var v in hoistedValues)
             {
                 data.Remove(v);
             }
-            hoistedValues.RemoveAll(x=>!forbiddenValueTester(x));
+            hoistedValues.RemoveAll(x => !forbiddenValueTester(x));
         }
 
         public override void Push(ICollection<T> data)
         {
-            foreach(var v in hoistedValues.Where(x=>forbiddenValueTester(x))) data.Add(v);
+            foreach (var v in hoistedValues.Where(x => forbiddenValueTester(x))) data.Add(v);
         }
 
         public override void Read(BinaryReader reader)
         {
-            BinaryUtils.ReadList(reader,hoistedValues,(x)=>(T)serializer.Deserialize(x));
+            BinaryUtils.ReadList(reader, hoistedValues, (x) => (T)serializer.Deserialize(x));
         }
 
         public override void Write(BinaryWriter writer)
         {
-            BinaryUtils.WriteList(writer,hoistedValues,(x,y)=>serializer.Serialize(x,y));
+            BinaryUtils.WriteList(writer, hoistedValues, (x, y) => serializer.Serialize(x, y));
         }
 
     }

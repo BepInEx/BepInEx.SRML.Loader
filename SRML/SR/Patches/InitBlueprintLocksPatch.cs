@@ -1,8 +1,4 @@
 ﻿using HarmonyLib;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace SRML.SR.Patches
 {
@@ -14,7 +10,7 @@ namespace SRML.SR.Patches
         {
             if (SRSingleton<SceneContext>.Instance.GameModeConfig.GetModeSettings().blueprintsEnabled)
             {
-                foreach(var v in GadgetRegistry.customBlueprintLocks)
+                foreach (var v in GadgetRegistry.customBlueprintLocks)
                 {
                     __instance.blueprintLocks[v.Key] = v.Value(__instance);
                 }

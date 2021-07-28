@@ -1,11 +1,6 @@
 ﻿using SRML.SR.SaveSystem.Data;
-using SRML.Utils;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using UnityEngine;
 
 namespace SRML.SR.SaveSystem.Format
 {
@@ -13,7 +8,7 @@ namespace SRML.SR.SaveSystem.Format
     {
         public IdentifierType idType;
         public long longIdentifier;
-        public string stringIdentifier="";
+        public string stringIdentifier = "";
         public CompoundDataPiece dataPiece;
 
         public override int LatestVersion => 0;
@@ -22,8 +17,8 @@ namespace SRML.SR.SaveSystem.Format
 
         public override void ReadData(BinaryReader reader)
         {
-            bool isOld = ModdedSaveData.LATEST_READ_VERSION<4;
-            int number =  reader.ReadInt32();
+            bool isOld = ModdedSaveData.LATEST_READ_VERSION < 4;
+            int number = reader.ReadInt32();
             if (number >= 3) isOld = false;
 
             if (number >= 3) number -= 3;
@@ -37,7 +32,7 @@ namespace SRML.SR.SaveSystem.Format
 
         public override void WriteData(BinaryWriter writer)
         {
-            
+
             writer.Write((int)idType);
             writer.Write(Version);
             writer.Write(longIdentifier);
@@ -45,7 +40,7 @@ namespace SRML.SR.SaveSystem.Format
             DataPiece.Serialize(writer, dataPiece);
         }
 
-        
+
 
         public override void Read(BinaryReader reader)
         {
@@ -59,9 +54,9 @@ namespace SRML.SR.SaveSystem.Format
 
         static ExtendedDataTree()
         {
-            EnumTranslator.RegisterEnumFixer<ExtendedDataTree>((translator, mode, piece) => 
+            EnumTranslator.RegisterEnumFixer<ExtendedDataTree>((translator, mode, piece) =>
             {
-                if(piece.dataPiece!=null) translator.FixEnumValues(mode, piece.dataPiece);
+                if (piece.dataPiece != null) translator.FixEnumValues(mode, piece.dataPiece);
             });
         }
 
@@ -73,7 +68,7 @@ namespace SRML.SR.SaveSystem.Format
         }
     }
 
-    
 
-    
+
+
 }

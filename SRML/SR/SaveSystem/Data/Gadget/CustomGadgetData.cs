@@ -1,14 +1,11 @@
 ﻿using MonomiPark.SlimeRancher.DataModel;
+using SRML.SR.SaveSystem.Data.Partial;
 using SRML.SR.SaveSystem.Registry;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using SRML.SR.SaveSystem.Data.Partial;
-using UnityEngine;
-using VanillaGadgetData = MonomiPark.SlimeRancher.Persist.PlacedGadgetV08;
 using VanillaDroneData = MonomiPark.SlimeRancher.Persist.DroneGadgetV01;
+using VanillaGadgetData = MonomiPark.SlimeRancher.Persist.PlacedGadgetV08;
 namespace SRML.SR.SaveSystem.Data.Gadget
 {
     internal abstract class CustomGadgetData<T> : CustomGadgetData where T : GadgetModel
@@ -72,13 +69,13 @@ namespace SRML.SR.SaveSystem.Data.Gadget
                     v.fashions.RemoveAll(x => x == Identifiable.Id.NONE);
                     v.baitTypeId = translator.TranslateEnum(mode, v.baitTypeId);
                     v.gordoTypeId = translator.TranslateEnum(mode, v.gordoTypeId);
-                    if(v.drone!=null) translator.FixEnumValues(mode,v.drone);
+                    if (v.drone != null) translator.FixEnumValues(mode, v.drone);
                 });
 
             EnumTranslator.RegisterEnumFixer((EnumTranslator translator, EnumTranslator.TranslationMode mode,
                 VanillaDroneData v) =>
             {
-                translator.FixEnumValues(mode,v.drone.fashions);
+                translator.FixEnumValues(mode, v.drone.fashions);
                 v.drone.fashions.RemoveAll(x => x == Identifiable.Id.NONE);
             });
             PartialGadgetData.RegisterEnumFixer();
@@ -91,7 +88,7 @@ namespace SRML.SR.SaveSystem.Data.Gadget
                 if (ModdedIDRegistry.IsModdedID(data.baitTypeId) || ModdedIDRegistry.IsModdedID(data.gordoTypeId))
                     return CustomChecker.CustomLevel.PARTIAL;
                 if (data.fashions.Any(ModdedIDRegistry.IsModdedID)) return CustomChecker.CustomLevel.PARTIAL;
-                return data.drone==null? CustomChecker.CustomLevel.VANILLA : CustomChecker.GetCustomLevel(data.drone);
+                return data.drone == null ? CustomChecker.CustomLevel.VANILLA : CustomChecker.GetCustomLevel(data.drone);
             });
             CustomChecker.RegisterCustomChecker((VanillaDroneData data) =>
             {

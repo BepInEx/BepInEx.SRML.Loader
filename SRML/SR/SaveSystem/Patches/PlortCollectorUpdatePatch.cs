@@ -1,10 +1,7 @@
 ﻿using HarmonyLib;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
-using System.Text;
 
 namespace SRML.SR.SaveSystem.Patches
 {
@@ -14,7 +11,7 @@ namespace SRML.SR.SaveSystem.Patches
     {
         public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instr)
         {
-            foreach(var v in instr)
+            foreach (var v in instr)
             {
                 if (v.opcode == OpCodes.Callvirt && (v.operand as MethodInfo).Name == "MaybeAddIdentifiable")
                 {
@@ -25,7 +22,8 @@ namespace SRML.SR.SaveSystem.Patches
             }
         }
 
-        public static bool Placeholder(SiloStorage storage, Identifiable.Id id, PlortCollector.JointReference joint) {
+        public static bool Placeholder(SiloStorage storage, Identifiable.Id id, PlortCollector.JointReference joint)
+        {
             return storage.MaybeAddIdentifiable(joint.vacuumable.identifiable);
         }
     }

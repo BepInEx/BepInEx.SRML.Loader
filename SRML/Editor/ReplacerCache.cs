@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using SRML.Editor;
+﻿using System.Collections.Generic;
 
 namespace SRML.Editor
 {
@@ -14,7 +10,7 @@ namespace SRML.Editor
         {
             if (replacers.TryGetValue(replacer, out var resolved)) return resolved;
             var newreplacer = ResolvedReplacer.Resolve(replacer);
-            replacers.Add(replacer,newreplacer);
+            replacers.Add(replacer, newreplacer);
             return newreplacer;
         }
 

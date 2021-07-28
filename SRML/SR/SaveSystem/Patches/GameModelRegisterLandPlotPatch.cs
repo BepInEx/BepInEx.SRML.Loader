@@ -1,10 +1,8 @@
 ﻿using HarmonyLib;
 using MonomiPark.SlimeRancher.DataModel;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Emit;
-using System.Text;
 using UnityEngine;
 
 namespace SRML.SR.SaveSystem.Patches
@@ -13,9 +11,9 @@ namespace SRML.SR.SaveSystem.Patches
     [HarmonyPatch("RegisterLandPlot")]
     public static class GameModelRegisterLandPlotPatch
     {
-        public static  IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instr)
+        public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instr)
         {
-            foreach(var v in instr)
+            foreach (var v in instr)
             {
                 if (v.opcode == OpCodes.Newobj)
                 {

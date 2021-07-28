@@ -1,17 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using MonomiPark.SlimeRancher.Persist;
 using SRML;
 using SRML.SR.SaveSystem;
-using UnityEngine;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 /// <summary>
 /// Handles identification of Modded ID's
 /// </summary>
 static internal class ModdedIDRegistry
 {
-    internal static Dictionary<Type,IIDRegistry> moddedIdRegistries = new Dictionary<Type, IIDRegistry>();
+    internal static Dictionary<Type, IIDRegistry> moddedIdRegistries = new Dictionary<Type, IIDRegistry>();
 
     internal static void RegisterIDRegistry(IIDRegistry registry)
     {
@@ -38,8 +37,8 @@ static internal class ModdedIDRegistry
 
     public static bool IsNullID(object id)
     {
-        return id.GetType().IsEnum && ((int) id) == 0;
-        
+        return id.GetType().IsEnum && ((int)id) == 0;
+
     }
 
     public static bool IsValidID(object id)
@@ -49,7 +48,7 @@ static internal class ModdedIDRegistry
 
     internal static SRMod ModForID(object data)
     {
-        
+
         if (!IsModdedID(data)) return null;
         return moddedIdRegistries.FirstOrDefault((x) => x.Key == data.GetType()).Value?.GetModForID(data);
     }

@@ -1,13 +1,10 @@
-﻿using System;
+﻿using SRML.SR.SaveSystem.Data;
+using SRML.SR.SaveSystem.Data.Appearances;
+using SRML.SR.SaveSystem.Data.Partial;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using SRML.SR.SaveSystem.Data;
-using SRML.SR.SaveSystem.Data.Ammo;
-using SRML.SR.SaveSystem.Data.Appearances;
-using SRML.SR.SaveSystem.Data.Partial;
-using SRML.Utils;
 using UnityEngine;
 
 namespace SRML.SR.SaveSystem.Format
@@ -24,7 +21,7 @@ namespace SRML.SR.SaveSystem.Format
 
         public EnumTranslator enumTranslator;
 
-        public Dictionary<DataIdentifier,PartialData> partialData = new Dictionary<DataIdentifier, PartialData>();
+        public Dictionary<DataIdentifier, PartialData> partialData = new Dictionary<DataIdentifier, PartialData>();
 
         public PartialAppearancesData appearancesData = new PartialAppearancesData();
 
@@ -62,7 +59,7 @@ namespace SRML.SR.SaveSystem.Format
 
                 ammoDataEntries.Add(newEntry);
             }
-            
+
             segments.Clear();
             count = reader.ReadInt32();
             for (int i = 0; i < count; i++)
@@ -74,10 +71,10 @@ namespace SRML.SR.SaveSystem.Format
                     mod.Read(reader);
                     segments.Add(mod);
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     Debug.Log($"Encountered exception {e}\nskipping loading {mod.modid} skipping {mod.byteLength} bytes in the stream");
-                    reader.BaseStream.Seek(start + mod.byteLength,SeekOrigin.Begin);
+                    reader.BaseStream.Seek(start + mod.byteLength, SeekOrigin.Begin);
                 }
             }
 
@@ -93,12 +90,12 @@ namespace SRML.SR.SaveSystem.Format
                     {
                         var id = DataIdentifier.Read(reader);
                         var dataType = DataIdentifier.IdentifierTypeToData[id.Type];
-                        if(PartialData.TryGetPartialData(dataType,out var data))
+                        if (PartialData.TryGetPartialData(dataType, out var data))
                         {
                             data.Read(reader);
                             partialData[id] = data;
                         }
-                        else Debug.LogError("No partial data for data identifier type "+id.Type);
+                        else Debug.LogError("No partial data for data identifier type " + id.Type);
                     }
                     if (version >= 3)
                     {
@@ -106,14 +103,14 @@ namespace SRML.SR.SaveSystem.Format
                         {
                             appearancesData.Read(reader);
                         }
-                        catch(Exception e)
+                        catch (Exception e)
                         {
                             throw;
                         }
                     }
                 }
             }
-          
+
         }
 
         public void WriteData(BinaryWriter writer)
@@ -136,7 +133,7 @@ namespace SRML.SR.SaveSystem.Format
 
             foreach (var pair in partialData)
             {
-                DataIdentifier.Write(writer,pair.Key);
+                DataIdentifier.Write(writer, pair.Key);
                 pair.Value.Write(writer);
             }
 
@@ -175,11 +172,11 @@ namespace SRML.SR.SaveSystem.Format
 
         public void FixAllEnumValues(EnumTranslator.TranslationMode mode)
         {
-            enumTranslator?.FixEnumValues(mode,partialData);
+            enumTranslator?.FixEnumValues(mode, partialData);
             if (enumTranslator != null)
             {
                 var newDict = new Dictionary<DataIdentifier, PartialData>();
-                foreach(var v in partialData)
+                foreach (var v in partialData)
                 {
                     newDict.Add(v.Key.TranslateWithEnum(enumTranslator, mode), v.Value);
                 }
@@ -189,9 +186,9 @@ namespace SRML.SR.SaveSystem.Format
             enumTranslator?.FixEnumValues(mode, ammoDataEntries);
             foreach (var v in segments)
             {
-                v.FixAllValues(enumTranslator,mode);
+                v.FixAllValues(enumTranslator, mode);
             }
-            
+
         }
     }
 }

@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Reflection;
-using System.Text;
 
 namespace SRML.Config
 {
@@ -12,7 +9,7 @@ namespace SRML.Config
         {
             SRMod.ForceModContext(mod);
 
-            foreach(var file in GetConfigs(mod.EntryType.Module))
+            foreach (var file in GetConfigs(mod.EntryType.Module))
             {
                 mod.Configs.Add(file);
                 file.TryLoadFromFile();
@@ -23,7 +20,7 @@ namespace SRML.Config
 
         public static IEnumerable<ConfigFile> GetConfigs(Module module)
         {
-            foreach(var v in module.GetTypes())
+            foreach (var v in module.GetTypes())
             {
                 var file = ConfigFile.GenerateConfig(v);
                 if (file != null) yield return file;

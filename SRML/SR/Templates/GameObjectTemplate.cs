@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using SRML.SR.Templates.Components;
+﻿using SRML.SR.Templates.Components;
 using SRML.SR.Utils.BaseObjects;
 using SRML.SR.Utils.Debug;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace SRML.SR.Templates

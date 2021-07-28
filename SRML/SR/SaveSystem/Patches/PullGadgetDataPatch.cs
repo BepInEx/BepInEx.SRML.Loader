@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Reflection.Emit;
-using System.Text;
-using HarmonyLib;
+﻿using HarmonyLib;
 using MonomiPark.SlimeRancher;
 using MonomiPark.SlimeRancher.DataModel;
 using MonomiPark.SlimeRancher.Persist;
 using SRML.SR.SaveSystem.Data.Gadget;
-using UnityEngine;
+using System;
+using System.Collections.Generic;
+using System.Reflection;
+using System.Reflection.Emit;
 using VanillaGadgetData = MonomiPark.SlimeRancher.Persist.PlacedGadgetV08;
 namespace SRML.SR.SaveSystem.Patches
 {
@@ -18,7 +15,7 @@ namespace SRML.SR.SaveSystem.Patches
     {
         public static MethodInfo TargetMethod()
         {
-            return AccessTools.Method(typeof(SavedGame), "Pull", new Type[] {typeof(GameModel), typeof(WorldV22)});
+            return AccessTools.Method(typeof(SavedGame), "Pull", new Type[] { typeof(GameModel), typeof(WorldV22) });
         }
 
         public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instr)
@@ -34,7 +31,7 @@ namespace SRML.SR.SaveSystem.Patches
                         code.MoveNext();
                         yield return code.Current;
                         code.MoveNext();//skip newobj
-                        yield return new CodeInstruction(OpCodes.Ldloca_S,(byte)22);
+                        yield return new CodeInstruction(OpCodes.Ldloca_S, (byte)22);
                         yield return new CodeInstruction(OpCodes.Call,
                             AccessTools.Method(typeof(KeyValuePair<string, GadgetSiteModel>), "get_Value"));
                         yield return new CodeInstruction(OpCodes.Call,

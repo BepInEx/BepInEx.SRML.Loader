@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using MonomiPark.SlimeRancher.Persist;
-using SRML.SR.SaveSystem.Data.Partial;
+﻿using SRML.SR.SaveSystem.Data.Partial;
 using SRML.Utils;
-using UnityEngine;
+using System.IO;
 using VanillaGadgetData = MonomiPark.SlimeRancher.Persist.PlacedGadgetV08;
 namespace SRML.SR.SaveSystem.Data.Gadget
 {
@@ -29,18 +23,18 @@ namespace SRML.SR.SaveSystem.Data.Gadget
             data.baitTypeId = GiveNoneIfModded(data.baitTypeId);
             gordoTypeId = GiveBackIfModded(data.gordoTypeId);
             data.gordoTypeId = GiveNoneIfModded(data.gordoTypeId);
-            if (data.drone!=null) partialDrone.Pull(data.drone);
+            if (data.drone != null) partialDrone.Pull(data.drone);
             fashions.Pull(data.fashions);
         }
 
         static T GiveBackIfModded<T>(T a)
         {
-            return ModdedIDRegistry.IsModdedID(a) ? a : (T)(object) 0;
+            return ModdedIDRegistry.IsModdedID(a) ? a : (T)(object)0;
         }
 
         static T GiveNoneIfModded<T>(T a)
         {
-            return ModdedIDRegistry.IsModdedID(a) ? (T) (object) 0 : a;
+            return ModdedIDRegistry.IsModdedID(a) ? (T)(object)0 : a;
         }
 
         public override void Push(VanillaGadgetData data)
@@ -62,8 +56,8 @@ namespace SRML.SR.SaveSystem.Data.Gadget
 
         public override void WriteData(BinaryWriter writer)
         {
-            idSerializer.SerializeGeneric(writer,baitTypeId);
-            idSerializer.SerializeGeneric(writer,gordoTypeId);
+            idSerializer.SerializeGeneric(writer, baitTypeId);
+            idSerializer.SerializeGeneric(writer, gordoTypeId);
             partialDrone.Write(writer);
             fashions.Write(writer);
         }
@@ -75,8 +69,8 @@ namespace SRML.SR.SaveSystem.Data.Gadget
                 {
                     v.baitTypeId = translator.TranslateEnum(mode, v.baitTypeId);
                     v.gordoTypeId = translator.TranslateEnum(mode, v.gordoTypeId);
-                    translator.FixEnumValues(mode,v.partialDrone);
-                    translator.FixEnumValues(mode,v.fashions);
+                    translator.FixEnumValues(mode, v.partialDrone);
+                    translator.FixEnumValues(mode, v.fashions);
                 });
         }
     }

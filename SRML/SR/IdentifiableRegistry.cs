@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using SRML.SR.SaveSystem;
-using UnityEngine;
+﻿using SRML.SR.SaveSystem;
+using System;
 
 namespace SRML.SR
 {
@@ -20,7 +16,7 @@ namespace SRML.SR
         {
             if (SRModLoader.CurrentLoadingStep > SRModLoader.LoadingStep.PRELOAD)
                 throw new Exception("Can't register identifiables outside of the PreLoad step");
-            var id = moddedIdentifiables.RegisterValueWithEnum((Identifiable.Id)value,name);
+            var id = moddedIdentifiables.RegisterValueWithEnum((Identifiable.Id)value, name);
             if (shouldCategorize) CategorizeId(id);
             return id;
         }

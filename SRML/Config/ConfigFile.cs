@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using UnityEngine;
 
 namespace SRML.Config
@@ -34,10 +33,10 @@ namespace SRML.Config
 
         public void LoadIniData(IniData data)
         {
-            
-            foreach(var section in data.Sections)
+
+            foreach (var section in data.Sections)
             {
-                if(sections.TryGetValue(section.SectionName,out var confsect))
+                if (sections.TryGetValue(section.SectionName, out var confsect))
                 {
                     confsect.LoadIniData(section.Keys);
                 }
@@ -50,7 +49,7 @@ namespace SRML.Config
 
         public void WriteIniData(IniData data)
         {
-            foreach(var sectiondata in sections)
+            foreach (var sectiondata in sections)
             {
                 var section = new SectionData(sectiondata.Key);
                 sectiondata.Value.WriteIniData(section.Keys);
@@ -70,12 +69,12 @@ namespace SRML.Config
             {
                 defaultSection.AddElement(new FieldBackedConfigElement(field));
             }
-            foreach(var v in type.GetNestedTypes())
+            foreach (var v in type.GetNestedTypes())
             {
                 var sectionAttribute = v.GetCustomAttributes(typeof(ConfigSectionAttribute), false).FirstOrDefault() as ConfigSectionAttribute;
                 if (sectionAttribute == null) continue;
-                var newSection = file.AddSection(sectionAttribute.SectionName??v.Name);
-                foreach(var field in v.GetFields().Where(x => x.IsStatic))
+                var newSection = file.AddSection(sectionAttribute.SectionName ?? v.Name);
+                foreach (var field in v.GetFields().Where(x => x.IsStatic))
                 {
                     newSection.AddElement(new FieldBackedConfigElement(field));
                 }
@@ -101,7 +100,7 @@ namespace SRML.Config
             LoadIniData(data);
             SaveToFile();
             return true;
-            
+
         }
 
         public void SaveToFile()
@@ -112,6 +111,6 @@ namespace SRML.Config
             WriteIniData(data);
             parser.WriteFile(filePath, data);
         }
-        
+
     }
 }

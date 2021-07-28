@@ -1,9 +1,9 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using MonomiPark.SlimeRancher.DataModel;
+﻿using MonomiPark.SlimeRancher.DataModel;
 using SRML.SR.SaveSystem.Data.Partial;
 using SRML.SR.SaveSystem.Registry;
+using System;
+using System.IO;
+using System.Linq;
 using VanillaActorData = MonomiPark.SlimeRancher.Persist.ActorDataV09;
 namespace SRML.SR.SaveSystem.Data.Actor
 {
@@ -23,20 +23,20 @@ namespace SRML.SR.SaveSystem.Data.Actor
 
         public sealed override void PushCustomModel(ActorModel model)
         {
-            this.PushCustomModel((T) model);
+            this.PushCustomModel((T)model);
         }
 
         public sealed override void PullCustomModel(ActorModel model)
         {
-            this.PullCustomModel((T) model);
+            this.PullCustomModel((T)model);
         }
 
         public sealed override void Load(Stream stream, bool skipPayloadEnd)
         {
-            base.Load(stream,false);
+            base.Load(stream, false);
             var reader = new BinaryReader(stream);
             LoadCustomData(reader);
-            if(!skipPayloadEnd) ReadDataPayloadEnd(reader);
+            if (!skipPayloadEnd) ReadDataPayloadEnd(reader);
         }
 
         public sealed override void WriteData(BinaryWriter writer)

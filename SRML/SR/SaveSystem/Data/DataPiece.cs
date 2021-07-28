@@ -81,7 +81,7 @@ namespace SRML.SR.SaveSystem.Data
                     {
                             intSerializer.Serialize(x,(int)y.GetValue(i));
                     }
-                    
+
                 }
             },
             (x) =>
@@ -139,7 +139,7 @@ namespace SRML.SR.SaveSystem.Data
             {
 
                 if (piece.dataFixer != null) piece.dataFixer.Invoke(translator, mode, piece.data); else if (piece.typeId == DataType.ENUM) piece.data = translator.TranslateEnum(piece.data.GetType(), mode, piece.data); else translator.FixEnumValues(mode, piece.data);
-                
+
             });
         }
 
@@ -198,7 +198,7 @@ namespace SRML.SR.SaveSystem.Data
 
         public T GetValue<T>()
         {
-            return (T) data;
+            return (T)data;
 
         }
 
@@ -235,14 +235,14 @@ namespace SRML.SR.SaveSystem.Data
 
         public Type GetDataType()
         {
-            return typeId == DataType.ENUM?data?.GetType():typeToDataType.FirstOrDefault((g) => g.Value == typeId).Key;
+            return typeId == DataType.ENUM ? data?.GetType() : typeToDataType.FirstOrDefault((g) => g.Value == typeId).Key;
         }
 
         public override bool Equals(object obj)
         {
             var piece = obj as DataPiece;
             return piece != null &&
-                   key == piece.key&&typeId==piece.typeId&&data==piece.data;
+                   key == piece.key && typeId == piece.typeId && data == piece.data;
         }
 
         public override int GetHashCode()
@@ -255,7 +255,7 @@ namespace SRML.SR.SaveSystem.Data
 
         public virtual void SetEnumTranslator(EnumTranslator.EnumFixerDelegate del)
         {
-            dataFixer = del;   
+            dataFixer = del;
         }
 
     }

@@ -25,7 +25,7 @@ namespace SRML.SR.SaveSystem.Data
         {
             EnumTranslator.RegisterEnumFixer<CompoundDataPiece>((translator, mode, piece) =>
             {
-                foreach(var v in piece.DataList)
+                foreach (var v in piece.DataList)
                 {
                     translator.FixEnumValues(mode, v);
                 }
@@ -41,7 +41,7 @@ namespace SRML.SR.SaveSystem.Data
 
         DataPiece GetCachedPiece(string key)
         {
-            if (!_cache.TryGetValue(key, out var piece)||piece==null)
+            if (!_cache.TryGetValue(key, out var piece) || piece == null)
             {
                 var cachedPiece = DataList.FirstOrDefault((x) => key == x.key);
                 if (cachedPiece != null) _cache[key] = piece;
@@ -64,7 +64,7 @@ namespace SRML.SR.SaveSystem.Data
             }
         }
 
-        
+
 
         public DataPiece this[string index]
         {
@@ -92,7 +92,7 @@ namespace SRML.SR.SaveSystem.Data
             return this[key] != null;
         }
 
-        public DataPiece GetPiece(string key,Type type)
+        public DataPiece GetPiece(string key, Type type)
         {
             if (HasPiece(key)) return this[key];
             return AddPiece(new DataPiece(key, type));
@@ -125,7 +125,7 @@ namespace SRML.SR.SaveSystem.Data
 
         public void SetValue(string key, object value)
         {
-            GetPiece(key,value.GetType()).SetValue(value);
+            GetPiece(key, value.GetType()).SetValue(value);
         }
 
         public override String ToString()
@@ -136,7 +136,7 @@ namespace SRML.SR.SaveSystem.Data
 
             return build.ToString();
 
-            
+
         }
         void Stringify(StringBuilder builder, Action<String> adder = null)
         {

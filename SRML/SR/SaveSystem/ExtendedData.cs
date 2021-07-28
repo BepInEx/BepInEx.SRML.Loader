@@ -33,7 +33,8 @@ namespace SRML.SR.SaveSystem
                         case ExtendedDataTree.IdentifierType.ACTOR:
                             var identifier = DataIdentifier.GetActorIdentifier(extendedDataTree.longIdentifier);
                             PreparedData pdata;
-                            if (!preparedData.TryGetValue(identifier, out pdata)) {
+                            if (!preparedData.TryGetValue(identifier, out pdata))
+                            {
                                 pdata = new PreparedData() { Data = new CompoundDataPiece("root"), SourceType = PreparedData.PreparationSource.SPAWN };
                                 preparedData[identifier] = pdata;
                             }
@@ -130,7 +131,7 @@ namespace SRML.SR.SaveSystem
         }
 
         public static bool HasExtendedData(GameObject obj) => obj.GetComponents<ExtendedData.Participant>().Length > 0;
-        
+
         internal static void Push(ModdedSaveData data)
         {
             foreach (var actorData in GetAllData(SceneContext.Instance.GameModel))
@@ -153,14 +154,14 @@ namespace SRML.SR.SaveSystem
                     });
                 }
             }
-            foreach(var pair in worldSaveData)
+            foreach (var pair in worldSaveData)
             {
                 SaveRegistry.GetSaveInfo(pair.Key).WorldDataSave(pair.Value);
                 if (pair.Value.DataList.Count > 0)
                 {
 
                     data.GetSegmentForMod(pair.Key).extendedWorldData = pair.Value;
-                }   
+                }
             }
         }
 
@@ -196,10 +197,10 @@ namespace SRML.SR.SaveSystem
             var modid = ExtendedDataUtils.GetModForParticipant(p)?.ModInfo.Id ?? "srml";
             return piece.HasPiece(modid) && piece.GetCompoundPiece(modid).HasPiece(ExtendedDataUtils.GetParticipantName(p));
         }
-            
+
         public static void ApplyDataToGameObject(GameObject obj, CompoundDataPiece piece)
         {
-            foreach(var participant in obj.GetComponents<Participant>())
+            foreach (var participant in obj.GetComponents<Participant>())
             {
                 if (HasValidDataForParticipant(participant, piece)) participant.ReadData(ExtendedDataUtils.GetPieceForParticipantFromRoot(participant, piece));
             }
@@ -208,9 +209,9 @@ namespace SRML.SR.SaveSystem
         public static CompoundDataPiece ReadDataFromGameObject(GameObject obj)
         {
             var newCompound = new CompoundDataPiece("root");
-            foreach(var participant in obj.GetComponents<Participant>())
+            foreach (var participant in obj.GetComponents<Participant>())
             {
-                participant.WriteData(ExtendedDataUtils.GetPieceForParticipantFromRoot(participant,newCompound));
+                participant.WriteData(ExtendedDataUtils.GetPieceForParticipantFromRoot(participant, newCompound));
             }
 
             return newCompound;
@@ -218,9 +219,9 @@ namespace SRML.SR.SaveSystem
 
 
 
-        static IEnumerable<KeyValuePair<DataIdentifier,CompoundDataPiece>> GetAllData(GameModel model)
+        static IEnumerable<KeyValuePair<DataIdentifier, CompoundDataPiece>> GetAllData(GameModel model)
         {
-            foreach(var v in model.actors)
+            foreach (var v in model.actors)
             {
                 if (v.Value?.transform == null) continue;
                 yield return new KeyValuePair<DataIdentifier, CompoundDataPiece>(DataIdentifier.GetActorIdentifier(v.Key), ReadDataFromGameObject(v.Value.transform.gameObject));

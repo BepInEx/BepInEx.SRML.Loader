@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using HarmonyLib;
+﻿using HarmonyLib;
 using SRML.Config;
 using SRML.Utils;
+using System;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace SRML
 {
@@ -15,7 +12,7 @@ namespace SRML
     /// </summary>
     public class SRModInfo
     {
-        public SRModInfo(string modid,string name, string author, ModVersion version,string description)
+        public SRModInfo(string modid, string name, string author, ModVersion version, string description)
         {
             Id = modid;
             Name = name;
@@ -23,6 +20,7 @@ namespace SRML
             Version = version;
             Description = description;
         }
+
         public String Id { get; private set; }
         public String Name { get; private set; }
         public String Author { get; private set; }
@@ -44,6 +42,7 @@ namespace SRML
             public int Minor;
             public int Revision;
             public static readonly ModVersion DEFAULT = new ModVersion(1, 0);
+
             public ModVersion(int major, int minor, int revision = 0)
             {
                 Major = major;
@@ -60,7 +59,7 @@ namespace SRML
             {
                 string[] splits = s.Split('.');
                 if (splits.Length < 2 || splits.Length > 3) goto uhoh;
-                if (!Int32.TryParse(splits[0], out int major)|| !Int32.TryParse(splits[1], out int minor)) goto uhoh;
+                if (!Int32.TryParse(splits[0], out int major) || !Int32.TryParse(splits[1], out int minor)) goto uhoh;
                 int revision = 0;
                 if (splits.Length == 3 && !Int32.TryParse(splits[2], out revision)) goto uhoh;
 
@@ -69,7 +68,6 @@ namespace SRML
                 uhoh:
                 throw new Exception($"Invalid Version String: {s}");
             }
-
 
 
             public int CompareTo(ModVersion other)
@@ -84,10 +82,11 @@ namespace SRML
             }
         }
     }
+
     /// <summary>
     /// Actual internal implementation of a mod
     /// </summary>
-    internal class SRMod 
+    internal class SRMod
     {
         /// <summary>
         /// Mods associated SRModInfo object
@@ -98,13 +97,14 @@ namespace SRML
         /// Path of the mod (usually the directory where the core modinfo.json is located)
         /// </summary>
         public String Path { get; private set; }
+
         public List<ConfigFile> Configs { get; private set; } = new List<ConfigFile>();
         public Type EntryType { get; private set; }
         private Harmony _harmonyInstance;
 
         private IModEntryPoint entryPoint;
 
-       
+
         private static SRMod forcedContext;
 
         /// <summary>
@@ -125,6 +125,7 @@ namespace SRML
         {
             forcedContext = mod;
         }
+
         /// <summary>
         /// Clears the current mod context
         /// </summary>
@@ -154,10 +155,11 @@ namespace SRML
 
         public String GetDefaultHarmonyName()
         {
-            return $"net.{(ModInfo.Author==null||ModInfo.Author.Length==0?"srml":Regex.Replace(ModInfo.Author, @"\s+", ""))}.{ModInfo.Id}";
+            return
+                $"net.{(ModInfo.Author == null || ModInfo.Author.Length == 0 ? "srml" : Regex.Replace(ModInfo.Author, @"\s+", ""))}.{ModInfo.Id}";
         }
 
-        public SRMod(SRModInfo info,IModEntryPoint entryPoint)
+        public SRMod(SRModInfo info, IModEntryPoint entryPoint)
         {
             this.ModInfo = info;
             this.EntryType = entryPoint.GetType();
@@ -184,5 +186,4 @@ namespace SRML
             entryPoint.PostLoad();
         }
     }
-    
 }

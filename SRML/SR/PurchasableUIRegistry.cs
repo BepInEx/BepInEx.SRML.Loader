@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace SRML.SR
 {
@@ -74,12 +73,12 @@ namespace SRML.SR
         /// <param name="comparer">Comparer used for sorting</param>
         public static void RegisterEntrySorter<T>(IComparer<PurchaseUI.Purchasable> comparer) where T : BaseUI
         {
-            RegisterManipulator((x,y)=>typeof(T).IsAssignableFrom(x), new PurchasableManipulatorDelegate((BaseUI x, ref PurchaseUI.Purchasable[] y) =>
-            {
-                var list = y.ToList();
-                list.Sort(comparer);
-                y = list.ToArray();
-            }));
+            RegisterManipulator((x, y) => typeof(T).IsAssignableFrom(x), new PurchasableManipulatorDelegate((BaseUI x, ref PurchaseUI.Purchasable[] y) =>
+               {
+                   var list = y.ToList();
+                   list.Sort(comparer);
+                   y = list.ToArray();
+               }));
         }
 
         public static void RegisterManipulator(PurchasableUIPredicate pred, PurchasableManipulatorDelegate man)
@@ -104,7 +103,7 @@ namespace SRML.SR
         }
 
         public static void RegisterManipulator(Type t, PurchasableManipulatorDelegate man)
-        {   
+        {
             if (!typeof(BaseUI).IsAssignableFrom(t)) throw new Exception($"{t} does not extend BaseUI!");
             RegisterManipulator((otherType, x) => t.IsAssignableFrom(otherType), man);
         }

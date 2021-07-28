@@ -1,8 +1,5 @@
 ﻿using HarmonyLib;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 
 namespace SRML.SR
@@ -14,14 +11,14 @@ namespace SRML.SR
         public static void RegisterBasicTarget(Identifiable.Id id)
         {
             customBasicTarget.Add(id, SRMod.GetCurrentMod());
-            foreach(var v in GetMetadatas())
+            foreach (var v in GetMetadatas())
             {
                 v.targets = v.targets.AddToArray(new DroneMetadata.Program.Target.Basic(id));
             }
         }
 
 
-        
+
         static IEnumerable<DroneMetadata> GetMetadatas()
         {
             GameContext context;
@@ -36,7 +33,7 @@ namespace SRML.SR
             }
 
             HashSet<DroneMetadata> metadataCache = new HashSet<DroneMetadata>();
-            foreach(var v in Gadget.DRONE_CLASS)
+            foreach (var v in Gadget.DRONE_CLASS)
             {
                 var data = context.LookupDirector.GetGadgetDefinition(v).prefab.GetComponentInChildren<DroneGadget>().metadata;
                 if (metadataCache.Add(data)) yield return data;

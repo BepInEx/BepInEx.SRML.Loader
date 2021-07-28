@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Reflection;
-using System.Text;
-using UnityEngine;
 
 namespace SRML.Utils.Enum
 {
@@ -21,20 +17,20 @@ namespace SRML.Utils.Enum
                     {
                         if (!field.FieldType.IsEnum) continue;
 
-                        if ((int) field.GetValue(null) == 0)
+                        if ((int)field.GetValue(null) == 0)
                         {
                             var newVal = EnumPatcher.GetFirstFreeValue(field.FieldType);
                             EnumPatcher.AddEnumValueWithAlternatives(field.FieldType, newVal, field.Name);
-                            field.SetValue(null,newVal);
+                            field.SetValue(null, newVal);
                         }
                         else
-                        EnumPatcher.AddEnumValueWithAlternatives(field.FieldType,field.GetValue(null),field.Name);
-                        
-                        
+                            EnumPatcher.AddEnumValueWithAlternatives(field.FieldType, field.GetValue(null), field.Name);
+
+
                     }
                 }
             }
-            SRMod.ClearModContext();    
+            SRMod.ClearModContext();
         }
     }
 }

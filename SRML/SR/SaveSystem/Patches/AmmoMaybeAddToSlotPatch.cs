@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using HarmonyLib;
-using SRML.SR.SaveSystem.Data;
+﻿using HarmonyLib;
 using SRML.SR.SaveSystem.Data.Ammo;
-using UnityEngine;
+using System;
 
 namespace SRML.SR.SaveSystem.Patches
 {
@@ -30,7 +25,7 @@ namespace SRML.SR.SaveSystem.Patches
                 }
 
                 if (count == -1) throw new Exception();
-                if (identifiable&&ExtendedData.HasExtendedData(identifiable.gameObject))
+                if (identifiable && ExtendedData.HasExtendedData(identifiable.gameObject))
                 {
                     var ammo = PersistentAmmoManager.GetPersistentAmmoForAmmo(__instance.ammoModel);
                     ammo.DataModel.slots[count].PushTop(ExtendedData.ReadDataFromGameObject(identifiable.gameObject));
@@ -45,7 +40,7 @@ namespace SRML.SR.SaveSystem.Patches
                 }
             }
         }
-        
+
     }
 
     [HarmonyPatch(typeof(Ammo))]

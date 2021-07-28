@@ -1,9 +1,5 @@
-﻿using SRML.SR.SaveSystem.Format;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using UnityEngine;
 
 namespace SRML.SR.SaveSystem
 {
@@ -17,8 +13,8 @@ namespace SRML.SR.SaveSystem
         }
         internal static StringRegistry GetRegistry(string prefix)
         {
-            var registry = Registries.FirstOrDefault(x=>x.Prefix==prefix);
-            if(registry == null)
+            var registry = Registries.FirstOrDefault(x => x.Prefix == prefix);
+            if (registry == null)
             {
                 registry = new StringRegistry(prefix);
                 Registries.Add(registry);
@@ -26,20 +22,20 @@ namespace SRML.SR.SaveSystem
             return registry;
         }
 
-        internal static string ClaimID(string prefix, SRMod mod,string id)
+        internal static string ClaimID(string prefix, SRMod mod, string id)
         {
             var reg = GetRegistry(prefix);
             return reg.RegisterID(id, mod);
         }
 
-        public static string ClaimID(string prefix,string id)
+        public static string ClaimID(string prefix, string id)
         {
-            return ClaimID(prefix, SRMod.GetCurrentMod(),id);
+            return ClaimID(prefix, SRMod.GetCurrentMod(), id);
         }
 
         public static void FreeID(string prefix, string id)
         {
-            GetRegistry(prefix).UnRegisterID(id,SRMod.GetCurrentMod());
+            GetRegistry(prefix).UnRegisterID(id, SRMod.GetCurrentMod());
         }
 
         public static void FreeAllIDs(string prefix)
@@ -49,7 +45,7 @@ namespace SRML.SR.SaveSystem
 
         public static void FreeAllIDs()
         {
-            foreach(var v in Registries)
+            foreach (var v in Registries)
             {
                 v.UnRegisterAll(SRMod.GetCurrentMod());
             }
@@ -65,9 +61,9 @@ namespace SRML.SR.SaveSystem
             if (!StringRegistry.IsLongForm(str)) return null;
             StringRegistry.ParseLongForm(str, out var prefix, out var modid, out var id);
             var mod = SRModLoader.GetMod(modid);
-            if (!GetRegistry(prefix).Contains(mod,id)) return null;
+            if (!GetRegistry(prefix).Contains(mod, id)) return null;
             return mod;
         }
-    
+
     }
 }

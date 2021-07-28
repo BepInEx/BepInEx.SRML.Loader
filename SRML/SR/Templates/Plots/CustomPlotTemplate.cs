@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-using SRML.Console;
-using SRML.SR.Utils.Debug;
-using SRML.SR.Templates.Misc;
+﻿using SRML.SR.Templates.Misc;
 using SRML.SR.Utils.BaseObjects;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace SRML.SR.Templates.Plots

@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using SRML.Utils;
+using System;
 using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using SRML.Utils;
 using UnityEngine;
+
 namespace SRML
 {
     public static class FileSystem
@@ -25,6 +22,7 @@ namespace SRML
             {
                 Directory.CreateDirectory(path);
             }
+
             return path;
         }
 
@@ -46,7 +44,8 @@ namespace SRML
         /// <returns>The config path</returns>
         internal static String GetConfigPath(SRMod mod)
         {
-            return CheckDirectory(Path.Combine(Path.Combine(Application.persistentDataPath, "SRML/Config"), mod?.ModInfo.Id ?? "SRML"));
+            return CheckDirectory(Path.Combine(Path.Combine(Application.persistentDataPath, "SRML/Config"),
+                mod?.ModInfo.Id ?? "SRML"));
         }
 
         /// <summary>
@@ -55,7 +54,7 @@ namespace SRML
         /// <returns>The config path</returns>
         public static String GetMyConfigPath()
         {
-            return GetConfigPath(SRMod.GetCurrentMod());    
+            return GetConfigPath(SRMod.GetCurrentMod());
         }
     }
 }

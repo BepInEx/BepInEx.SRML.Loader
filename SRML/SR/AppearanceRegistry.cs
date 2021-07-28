@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace SRML.SR
 {
@@ -16,12 +15,12 @@ namespace SRML.SR
         {
             var combs = combiners.Where(x => x.Key(appearance1, appearance2)).Select(x => x.Value).ToList();
             combs.Sort((x, y) => x.Priority.CompareTo(y.Priority));
-            return combs.First().Combiner(appearance1,appearance2);
+            return combs.First().Combiner(appearance1, appearance2);
         }
 
-        public static void RegisterAppearanceCombiner(int priority, SlimeAppearance appearance, Func<SlimeAppearance,SlimeAppearance> func)
+        public static void RegisterAppearanceCombiner(int priority, SlimeAppearance appearance, Func<SlimeAppearance, SlimeAppearance> func)
         {
-            combiners.Add((x, y) => x == appearance || y == appearance,new AppearanceCombinerData()
+            combiners.Add((x, y) => x == appearance || y == appearance, new AppearanceCombinerData()
             {
                 Priority = priority,
                 Combiner = (x, y) =>

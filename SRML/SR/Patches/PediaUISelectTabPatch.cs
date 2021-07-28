@@ -1,8 +1,4 @@
 ﻿using HarmonyLib;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace SRML.SR.Patches
 {
@@ -10,9 +6,9 @@ namespace SRML.SR.Patches
     [HarmonyPatch("SelectTabForId")]
     internal static class PediaUISelectTabPatch
     {
-        public static void Prefix(PediaUI __instance,PediaDirector.Id id)
+        public static void Prefix(PediaUI __instance, PediaDirector.Id id)
         {
-            
+
             if (id == PediaDirector.Id.LOCKED) return;
             if (PediaRegistry.activeTabRenderer != null)
             {

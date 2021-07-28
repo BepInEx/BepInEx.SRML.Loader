@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace SRML.SR.Translation
+﻿namespace SRML.SR.Translation
 {
     public class SlimePediaEntryTranslation : PediaEntryTranslation
     {
@@ -25,7 +20,7 @@ namespace SRML.SR.Translation
 
         public SlimePediaEntryTranslation SetDietTranslation(string dietString)
         {
-            TranslationPatcher.AddPediaTranslation(DietKey,dietString);
+            TranslationPatcher.AddPediaTranslation(DietKey, dietString);
             return this;
         }
 

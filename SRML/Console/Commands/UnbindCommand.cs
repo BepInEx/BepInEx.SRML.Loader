@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace SRML.Console.Commands
 {
@@ -16,7 +15,7 @@ namespace SRML.Console.Commands
 
         public override bool Execute(string[] args)
         {
-            if((args?.Length ?? 0) == 0)
+            if ((args?.Length ?? 0) == 0)
             {
                 Console.LogError("Please supply a key!");
                 return false;
@@ -35,7 +34,7 @@ namespace SRML.Console.Commands
 
             KeyBindManager.RemoveBinding(key);
             KeyBindManager.SaveBinds();
-            
+
             return true;
         }
 

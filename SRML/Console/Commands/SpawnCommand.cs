@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using UnityEngine;
 
 namespace SRML.Console.Commands
@@ -17,7 +16,7 @@ namespace SRML.Console.Commands
 
         public override bool Execute(string[] args)
         {
-            if(args.Length < 1 || args.Length > 2)
+            if (args.Length < 1 || args.Length > 2)
             {
                 Console.LogError("Incorrect number of arguments!");
                 return false;
@@ -40,15 +39,15 @@ namespace SRML.Console.Commands
 
             if (args.Length != 2 || !Int32.TryParse(args[1], out count)) count = 1;
 
-            for(int i = 0; i < count; i++)
+            for (int i = 0; i < count; i++)
             {
 
-                
+
 
                 if (Physics.Raycast(new Ray(Camera.main.transform.position, Camera.main.transform.forward), out var hit))
                 {
                     var spawned = SRBehaviour.InstantiateActor(prefab, SceneContext.Instance.Player.GetComponent<RegionMember>().setId, true);
-                    spawned.transform.position = hit.point+hit.normal*PhysicsUtil.CalcRad(spawned.GetComponent<Collider>());
+                    spawned.transform.position = hit.point + hit.normal * PhysicsUtil.CalcRad(spawned.GetComponent<Collider>());
                     var delta = -(hit.point - Camera.main.transform.position).normalized;
                     var newForward = (delta - Vector3.Project(delta, hit.normal)).normalized;
                     spawned.transform.rotation = Quaternion.LookRotation(delta, hit.normal);
@@ -65,9 +64,9 @@ namespace SRML.Console.Commands
 
         public override List<string> GetAutoComplete(int argIndex, string argText)
         {
-            if(argIndex == 0)
+            if (argIndex == 0)
             {
-                return GameContext.Instance.LookupDirector.identifiablePrefabs.Select(x=>Identifiable.GetId(x).ToString()).ToList();
+                return GameContext.Instance.LookupDirector.identifiablePrefabs.Select(x => Identifiable.GetId(x).ToString()).ToList();
             }
             return base.GetAutoComplete(argIndex, argText);
         }

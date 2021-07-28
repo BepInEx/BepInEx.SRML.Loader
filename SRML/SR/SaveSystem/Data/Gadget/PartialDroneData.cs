@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using MonomiPark.SlimeRancher.Persist;
-using SRML.SR.SaveSystem.Data.Partial;
+﻿using SRML.SR.SaveSystem.Data.Partial;
 using SRML.Utils;
+using System.IO;
 using VanillaDroneData = MonomiPark.SlimeRancher.Persist.DroneGadgetV01;
 namespace SRML.SR.SaveSystem.Data.Gadget
 {
@@ -42,8 +37,8 @@ namespace SRML.SR.SaveSystem.Data.Gadget
             EnumTranslator.RegisterEnumFixer(
                 (EnumTranslator translator, EnumTranslator.TranslationMode mode, PartialDroneData v) =>
                 {
-                    translator.FixEnumValues(mode,v.fashions);
-                    
+                    translator.FixEnumValues(mode, v.fashions);
+
                 });
         }
     }

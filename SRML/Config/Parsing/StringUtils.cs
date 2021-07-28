@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace SRML.Config.Parsing
+﻿namespace SRML.Config.Parsing
 {
     static class StringUtils
     {

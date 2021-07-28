@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using MonomiPark.SlimeRancher.DataModel;
 
 namespace SRML.SR.SaveSystem.Registry
 {
@@ -8,7 +7,7 @@ namespace SRML.SR.SaveSystem.Registry
     {
         public delegate bool OwnershipCheckerDelegate<T>(T value);
 
-        public Dictionary<int,Func<K>> actorDataIds = new Dictionary<int, Func<K>>();
+        public Dictionary<int, Func<K>> actorDataIds = new Dictionary<int, Func<K>>();
 
         public Dictionary<Type, int> modelTypeToIds = new Dictionary<Type, int>();
 
@@ -23,18 +22,18 @@ namespace SRML.SR.SaveSystem.Registry
 
         public void AddCustomData<T>(int id, Func<K> creator)
         {
-            actorDataIds.Add(id,()=>creator());
-            modelTypeToIds.Add(typeof(T),id);
+            actorDataIds.Add(id, () => creator());
+            modelTypeToIds.Add(typeof(T), id);
         }
 
         public void AddCustomData<T>(int id, Type t)
         {
-            AddCustomData<T>(id, ()=>(K) Activator.CreateInstance(t));
+            AddCustomData<T>(id, () => (K)Activator.CreateInstance(t));
         }
 
         public override bool BelongsToMe(object b)
         {
-            return b is K k&&(ownershipChecker?.Invoke(k) ?? true);
+            return b is K k && (ownershipChecker?.Invoke(k) ?? true);
         }
 
         public K GetDataForID(int id)

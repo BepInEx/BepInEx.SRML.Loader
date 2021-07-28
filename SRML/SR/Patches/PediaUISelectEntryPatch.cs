@@ -1,10 +1,8 @@
 ﻿using HarmonyLib;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
-using System.Text;
 using UnityEngine;
 using static SRML.SR.PediaRegistry;
 
@@ -39,16 +37,16 @@ namespace SRML.SR.Patches
         {
             var list = instr.ToList();
             Label label = default;
-            foreach(var v in list)
+            foreach (var v in list)
             {
-                if(v.opcode == OpCodes.Br)
+                if (v.opcode == OpCodes.Br)
                 {
                     label = (Label)v.operand;
                 }
             }
             using (var codes = list.GetEnumerator())
             {
-                
+
                 while (codes.MoveNext())
                 {
                     var current = codes.Current;

@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Newtonsoft.Json.Converters;
-using SRML.SR.SaveSystem.Data.Partial;
 using UnityEngine;
 
 namespace SRML.SR
@@ -16,9 +13,9 @@ namespace SRML.SR
 
         internal static Dictionary<string, Dictionary<string, string>> doneDictionaries = new Dictionary<string, Dictionary<string, string>>();
 
-        internal static Dictionary<string,Dictionary<string,string>> patches = new Dictionary<string, Dictionary<string, string>>();
+        internal static Dictionary<string, Dictionary<string, string>> patches = new Dictionary<string, Dictionary<string, string>>();
 
-        internal static Dictionary<KeyValuePair<string,string>,SRMod> keyToMod = new Dictionary<KeyValuePair<String,String>,SRMod>();
+        internal static Dictionary<KeyValuePair<string, string>, SRMod> keyToMod = new Dictionary<KeyValuePair<String, String>, SRMod>();
 
         internal static void SetModForTranslationKey(string bundlename, string key, SRMod mod)
         {
@@ -29,7 +26,7 @@ namespace SRML.SR
         {
             if (GetPatchesFor(bundlename).ContainsKey(key)) Debug.LogWarning($"Translation key '{key}' for bundle '{bundlename}' is already taken by {keyToMod[new KeyValuePair<string, string>(bundlename, key)]}! Overwriting...");
             GetPatchesFor(bundlename)[key] = value;
-            SetModForTranslationKey(bundlename,key,mod);
+            SetModForTranslationKey(bundlename, key, mod);
         }
 
         /// <summary>
@@ -50,7 +47,7 @@ namespace SRML.SR
         /// <param name="value">The plain text translation</param>
         public static void AddPediaTranslation(string key, string value)
         {
-            AddTranslationKey("pedia",key,value);
+            AddTranslationKey("pedia", key, value);
         }
 
         /// <summary>
@@ -60,7 +57,7 @@ namespace SRML.SR
         /// <param name="value">The plain text translation</param>
         public static void AddActorTranslation(string key, string value)
         {
-            AddTranslationKey("actor",key,value);
+            AddTranslationKey("actor", key, value);
         }
 
         /// <summary>
@@ -70,9 +67,9 @@ namespace SRML.SR
         /// <param name="value">The plain text translation</param>
         public static void AddUITranslation(string key, string value)
         {
-            AddTranslationKey("ui",key,value);
+            AddTranslationKey("ui", key, value);
         }
-        
+
         private static Dictionary<string, string> GetPatchesFor(string bundleName)
         {
 
@@ -80,7 +77,7 @@ namespace SRML.SR
 
             if (!patches.ContainsKey(bundleName))
             {
-                patches.Add(bundleName, new Dictionary<string,string>());
+                patches.Add(bundleName, new Dictionary<string, string>());
             }
 
             return patches[bundleName];
@@ -94,8 +91,8 @@ namespace SRML.SR
                 return output.TryGetValue(key, out var list) ? list : output[key] = new List<string>();
             }
 
-            foreach(var pair in keyToMod.Where((x)=>x.Value==mod).Select((x)=>x.Key)) GetListForKey(pair.Key).Add(pair.Value);
-            
+            foreach (var pair in keyToMod.Where((x) => x.Value == mod).Select((x) => x.Key)) GetListForKey(pair.Key).Add(pair.Value);
+
             return output;
         }
 
@@ -104,11 +101,11 @@ namespace SRML.SR
             return GetModForKey(new KeyValuePair<string, string>(bundlename, key));
         }
 
-        static internal SRMod GetModForKey(KeyValuePair<string,string> pair)
+        static internal SRMod GetModForKey(KeyValuePair<string, string> pair)
         {
             return keyToMod.TryGetValue(pair, out var value) ? value : null;
         }
 
-        
+
     }
 }

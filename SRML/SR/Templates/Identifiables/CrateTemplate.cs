@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using MonomiPark.SlimeRancher.Regions;
+﻿using MonomiPark.SlimeRancher.Regions;
 using SRML.SR.Utils.BaseObjects;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace SRML.SR.Templates.Identifiables

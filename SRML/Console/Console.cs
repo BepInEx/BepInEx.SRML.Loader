@@ -1,10 +1,10 @@
-﻿using System;
+﻿using SRML.SR.Utils.Debug;
+using System;
 using System.Collections.Generic;
 using System.IO;
-using UnityEngine.SceneManagement;
-using UnityEngine;
 using System.Text.RegularExpressions;
-using SRML.SR.Utils.Debug;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace SRML.Console
 {

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace SRML.SR.Translation
 {
@@ -36,7 +33,7 @@ namespace SRML.SR.Translation
             return this;
         }
 
-        public PediaEntryTranslation SetDescriptionTranslation(string description)  
+        public PediaEntryTranslation SetDescriptionTranslation(string description)
         {
             TranslationPatcher.AddPediaTranslation(DescriptionKey, description);
             return this;

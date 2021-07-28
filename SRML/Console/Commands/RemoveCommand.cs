@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace SRML.Console.Commands
 {
@@ -22,7 +18,7 @@ namespace SRML.Console.Commands
                 if (gameobject.GetComponent<Identifiable>())
                 {
                     DeathHandler.Kill(gameobject, DeathHandler.Source.UNDEFINED, SceneContext.Instance.Player, "RemoveCommand.Execute");
-                    
+
                 }
                 else if (gameobject.GetComponent<Gadget>())
                 {

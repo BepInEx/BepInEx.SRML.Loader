@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using UnityEngine;
 
 namespace SRML.Console.Commands
 {
@@ -28,7 +25,7 @@ namespace SRML.Console.Commands
             }
             else
             {
-                Console.Log("Current Value: "+element.Options.Parser.EncodeObject(element.GetValue<object>()));
+                Console.Log("Current Value: " + element.Options.Parser.EncodeObject(element.GetValue<object>()));
             }
             SRMod.ForceModContext(mod);
             config.SaveToFile();
@@ -39,7 +36,7 @@ namespace SRML.Console.Commands
         public override List<string> GetAutoComplete(int argIndex, string argText)
         {
             if (argIndex == 0) return SRModLoader.GetMods().Where(x => x.Configs.Count > 0).Select(x => x.ModInfo.Id).ToList();
-            
+
             var strs = ConsoleWindow.cmdText.Split(' ');
 
             var mod = SRModLoader.GetMod(strs[1]);
@@ -54,7 +51,7 @@ namespace SRML.Console.Commands
 
             if (argIndex == 3) return section?.Elements.Select(x => x.Options.Name).ToList();
 
-            
+
 
 
             return base.GetAutoComplete(argIndex, argText);

@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Reflection;
 using UnityEngine;
-using System.IO;
 using static SlimeAppearance;
 
 namespace SRML.SR.Utils

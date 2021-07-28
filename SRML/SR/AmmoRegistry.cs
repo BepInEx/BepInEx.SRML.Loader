@@ -1,8 +1,5 @@
-﻿using SRML.SR.SaveSystem.Data.Ammo;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 
 namespace SRML.SR
@@ -53,7 +50,7 @@ namespace SRML.SR
 
         public static void RegisterSiloAmmo(Predicate<SiloStorage.StorageType> pred, Identifiable.Id id)
         {
-            foreach(SiloStorage.StorageType v in Enum.GetValues(typeof(SiloStorage.StorageType)))
+            foreach (SiloStorage.StorageType v in Enum.GetValues(typeof(SiloStorage.StorageType)))
             {
                 if (pred(v)) RegisterSiloAmmo(v, id);
             }

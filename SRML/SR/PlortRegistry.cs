@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace SRML.SR
 {
@@ -17,12 +15,12 @@ namespace SRML.SR
 
         public static void AddPlortEntry(Identifiable.Id plortid, ProgressDirector.ProgressType[] progressRequired)
         {
-            AddPlortEntry(new MarketUI.PlortEntry(){id=plortid,toUnlock = progressRequired});
+            AddPlortEntry(new MarketUI.PlortEntry() { id = plortid, toUnlock = progressRequired });
         }
 
         public static void AddPlortEntry(Identifiable.Id plortId)
         {
-            AddPlortEntry(plortId,new ProgressDirector.ProgressType[0]);
+            AddPlortEntry(plortId, new ProgressDirector.ProgressType[0]);
         }
 
         public static void AddEconomyEntry(EconomyDirector.ValueMap map)
@@ -55,7 +53,7 @@ namespace SRML.SR
         public static void RegisterPlort(Identifiable.Id id, float value, float fullSaturationValue)
         {
             AddPlortEntry(id);
-            AddEconomyEntry(id,value,fullSaturationValue);
+            AddEconomyEntry(id, value, fullSaturationValue);
         }
     }
 }

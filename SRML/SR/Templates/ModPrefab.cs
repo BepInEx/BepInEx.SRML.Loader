@@ -1,6 +1,4 @@
-﻿using SRML.SR;
-using SRML.SR.Templates;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace SRML.SR.Templates
 {

@@ -1,12 +1,11 @@
-﻿using System;
-using System.IO;
-using MonomiPark.SlimeRancher.Persist;
+﻿using MonomiPark.SlimeRancher.Persist;
 using SRML.SR.SaveSystem.Data;
 using SRML.SR.SaveSystem.Data.Actor;
 using SRML.SR.SaveSystem.Data.Gadget;
 using SRML.SR.SaveSystem.Data.LandPlot;
 using SRML.SR.SaveSystem.Registry;
-using UnityEngine;
+using System;
+using System.IO;
 using VanillaActorData = MonomiPark.SlimeRancher.Persist.ActorDataV09;
 using VanillaGadgetData = MonomiPark.SlimeRancher.Persist.PlacedGadgetV08;
 using VanillaPlotData = MonomiPark.SlimeRancher.Persist.LandPlotV08;
@@ -24,7 +23,7 @@ namespace SRML.SR.SaveSystem.Format
             EnumTranslator.RegisterEnumFixer(
                 (EnumTranslator translator, EnumTranslator.TranslationMode mode, IdentifiedData data) =>
                 {
-                    EnumTranslator.FixEnumValues(translator,mode,data.data);
+                    EnumTranslator.FixEnumValues(translator, mode, data.data);
                     data.dataID = data.dataID.TranslateWithEnum(translator, mode);
                 });
         }
@@ -36,10 +35,10 @@ namespace SRML.SR.SaveSystem.Format
             switch (dataID.Type)
             {
                 case IdentifierType.ACTOR:
-                    ReadData<CustomActorData,VanillaActorData>(reader,info);
+                    ReadData<CustomActorData, VanillaActorData>(reader, info);
                     break;
                 case IdentifierType.GADGET:
-                    ReadData<CustomGadgetData,VanillaGadgetData>(reader,info);
+                    ReadData<CustomGadgetData, VanillaGadgetData>(reader, info);
                     break;
                 case IdentifierType.LANDPLOT:
                     ReadData<CustomLandPlotData, VanillaPlotData>(reader, info);
@@ -63,7 +62,7 @@ namespace SRML.SR.SaveSystem.Format
             long start = writer.BaseStream.Position;
             writer.Write(0L);
             IsCustomModel = info.BelongsToMe(data);
-            DataIdentifier.Write(writer,dataID);
+            DataIdentifier.Write(writer, dataID);
             writer.Write(IsCustomModel);
             switch (dataID.Type)
             {

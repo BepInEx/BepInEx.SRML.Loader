@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace SRML.Console.Commands
 {
@@ -32,7 +31,7 @@ namespace SRML.Console.Commands
             {
 
                 Console.LogError("Invalid key!");
-                return false ;
+                return false;
             }
 
             KeyBindManager.CreateBinding(args[1], key);

@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Reflection.Emit;
-using System.Text;
-using HarmonyLib;
+﻿using HarmonyLib;
 using MonomiPark.SlimeRancher;
 using MonomiPark.SlimeRancher.DataModel;
 using MonomiPark.SlimeRancher.Persist;
 using SRML.SR.SaveSystem.Data.LandPlot;
-using UnityEngine;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Reflection.Emit;
 using VanillaLandPlotData = MonomiPark.SlimeRancher.Persist.LandPlotV08;
 namespace SRML.SR.SaveSystem.Patches
 {
@@ -24,7 +22,7 @@ namespace SRML.SR.SaveSystem.Patches
         public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instr)
         {
             var instrList = instr.ToList();
-            foreach (var v in instrList)    
+            foreach (var v in instrList)
             {
                 if (v.opcode == OpCodes.Newobj && v.operand is ConstructorInfo con &&
                     con.DeclaringType == typeof(VanillaLandPlotData))
@@ -33,7 +31,7 @@ namespace SRML.SR.SaveSystem.Patches
                     yield return new CodeInstruction(OpCodes.Ldloca_S, prevInstr.operand);
                     yield return new CodeInstruction(OpCodes.Call,
                         AccessTools.Method(typeof(KeyValuePair<string, LandPlotModel>), "get_Value"));
-                    yield return new CodeInstruction(OpCodes.Call,AccessTools.Method(typeof(PullLandPlotDataPatch),"CreateLandPlotData"));
+                    yield return new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(PullLandPlotDataPatch), "CreateLandPlotData"));
                 }
                 else
                 {

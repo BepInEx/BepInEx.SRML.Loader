@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
-using Debug = System.Diagnostics.Debug;
 
 namespace SRML.SR.UI
 {
@@ -22,7 +17,7 @@ namespace SRML.SR.UI
         public override void Awake()
         {
             this.modScrollbarContent = transform.Find("ModScroll/Viewport/Content").gameObject;
-            transform.Find("ModsFolderButton").GetComponent<Button>().onClick.AddListener(()=>Process.Start(Path.GetFullPath(FileSystem.ModPath)));
+            transform.Find("ModsFolderButton").GetComponent<Button>().onClick.AddListener(() => Process.Start(Path.GetFullPath(FileSystem.ModPath)));
             modNamePanelText = transform.Find("ModNamePanel/ModNameText").GetComponent<Text>();
             var modinfo = transform.Find("ModInfoScroll/Viewport/Content");
             authorNameText = modinfo.Find("ModInfoContainer/AuthorText").GetComponent<Text>();
@@ -40,10 +35,10 @@ namespace SRML.SR.UI
         public void AddModInfo(SRModInfo info)
         {
             var newobj = Instantiate(infoButtonPrefab);
-            newobj.GetComponent<Button>().onClick.AddListener( () => OnModSelect(info));
+            newobj.GetComponent<Button>().onClick.AddListener(() => OnModSelect(info));
             newobj.transform.GetChild(0).GetComponent<Text>().text = info.Name;
             newobj.transform.GetChild(1).GetComponent<Text>().text = $"Version: {info.Version}";
-            newobj.transform.SetParent(modScrollbarContent.transform,false);
+            newobj.transform.SetParent(modScrollbarContent.transform, false);
         }
 
         public void OnModSelect(SRModInfo info)
@@ -53,13 +48,13 @@ namespace SRML.SR.UI
             descriptionText.gameObject.SetActive(false);
             if (info.Author != null)
             {
-                authorNameText.text = "Author: "+info.Author;
+                authorNameText.text = "Author: " + info.Author;
                 authorNameText.gameObject.SetActive(true);
             }
 
             if (info.Description != null)
             {
-                descriptionText.text = "Description: "+info.Description;
+                descriptionText.text = "Description: " + info.Description;
                 descriptionText.gameObject.SetActive(true);
             }
         }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace SRML.SR.SaveSystem
 {
@@ -11,7 +10,7 @@ namespace SRML.SR.SaveSystem
 
         public delegate CustomLevel CustomCheckerDelegate(object obj);
 
-        public static Dictionary<Type,CustomCheckerDelegate> customCheckers = new Dictionary<Type, CustomCheckerDelegate>();
+        public static Dictionary<Type, CustomCheckerDelegate> customCheckers = new Dictionary<Type, CustomCheckerDelegate>();
 
         public static void RegisterCustomChecker(Type type, CustomCheckerDelegate del)
         {
@@ -20,7 +19,7 @@ namespace SRML.SR.SaveSystem
 
         public static void RegisterCustomChecker<T>(CustomCheckerGenericDelegate<T> del)
         {
-            RegisterCustomChecker(typeof(T),(x)=>del((T)x));
+            RegisterCustomChecker(typeof(T), (x) => del((T)x));
         }
 
         public static CustomLevel GetCustomLevel(object b)
@@ -44,5 +43,5 @@ namespace SRML.SR.SaveSystem
         }
     }
 
-    
+
 }

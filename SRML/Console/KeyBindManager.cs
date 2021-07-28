@@ -2,11 +2,9 @@
 using MonomiPark.SlimeRancher.Persist;
 using SRML.SR;
 using SRML.Utils;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using UnityEngine;
 
 namespace SRML.Console
@@ -21,9 +19,9 @@ namespace SRML.Console
 
         public static void Update()
         {
-            foreach(var bind in customKeyBinds)
+            foreach (var bind in customKeyBinds)
             {
-                if (bind.action.WasPressed) Console.ProcessInput(bind.commandToRun,true);
+                if (bind.action.WasPressed) Console.ProcessInput(bind.commandToRun, true);
             }
         }
 
@@ -31,11 +29,11 @@ namespace SRML.Console
         {
 
             Actions = new ConsoleActions();
-            
+
             var path = Path.Combine(FileSystem.GetMyConfigPath(), FILENAME);
             if (!File.Exists(path)) return;
             customKeyBinds.Clear();
-            using(var file = new BinaryReader(File.Open(path, FileMode.Open)))
+            using (var file = new BinaryReader(File.Open(path, FileMode.Open)))
             {
                 BinaryUtils.ReadList(file, customKeyBinds, (x) => KeyBinding.Read(x));
             }
@@ -44,13 +42,13 @@ namespace SRML.Console
         public static void SaveBinds()
         {
             var path = Path.Combine(FileSystem.GetMyConfigPath(), FILENAME);
-            using(var file = new BinaryWriter(File.Open(path, FileMode.OpenOrCreate)))
+            using (var file = new BinaryWriter(File.Open(path, FileMode.OpenOrCreate)))
             {
                 BinaryUtils.WriteList(file, customKeyBinds, (x, y) => y.Write(x));
             }
         }
 
-        public static void CreateBinding(string commandToRun,Key bindingKey)
+        public static void CreateBinding(string commandToRun, Key bindingKey)
         {
             var existingAction = customKeyBinds.FirstOrDefault(x => (x.action.BindingsOfTypes(BindingSourceType.KeyBindingSource).FirstOrDefault() as KeyBindingSource)?.Control.GetInclude(0) == bindingKey);
             if (existingAction != null)
@@ -98,7 +96,7 @@ namespace SRML.Console
 
             public static PlayerAction GetEphemeralPlayerAction()
             {
-                var action = new PlayerAction(PREFIX+latestID++, KeyBindManager.Actions);
+                var action = new PlayerAction(PREFIX + latestID++, KeyBindManager.Actions);
                 BindingRegistry.ephemeralActions.Add(action);
                 return action;
             }
@@ -109,7 +107,7 @@ namespace SRML.Console
                 binding.Load(reader.BaseStream);
                 var action = new PlayerAction(binding.action, KeyBindManager.Actions);
                 BindingRegistry.ephemeralActions.Add(action);
-                if (int.TryParse(binding.action.Substring(PREFIX.Length), out var val) && val >= latestID) latestID = val+1;
+                if (int.TryParse(binding.action.Substring(PREFIX.Length), out var val) && val >= latestID) latestID = val + 1;
                 SRInput.AddOrReplaceBinding(action, binding);
                 var keybind = new KeyBinding() { action = action, commandToRun = reader.ReadString() };
                 return keybind;

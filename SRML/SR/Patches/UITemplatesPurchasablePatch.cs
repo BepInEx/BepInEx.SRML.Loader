@@ -1,9 +1,7 @@
 ﻿using HarmonyLib;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
 
 namespace SRML.SR.Patches
 {
@@ -14,8 +12,8 @@ namespace SRML.SR.Patches
         public static void Prefix(ref PurchaseUI.Purchasable[] purchasables, PurchaseUI.OnClose onClose)
         {
             StackTrace trace = new StackTrace(1);
-            Type type=null;
-            foreach(var v in trace.GetFrames())
+            Type type = null;
+            foreach (var v in trace.GetFrames())
             {
                 var candidateType = v.GetMethod().DeclaringType;
                 if (typeof(BaseUI).IsAssignableFrom(candidateType))

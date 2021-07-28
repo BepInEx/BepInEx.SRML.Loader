@@ -1,10 +1,8 @@
-﻿using System;
+﻿using SRML.Utils;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using SRML.Utils;
 
 namespace SRML.SR.SaveSystem.Data.Partial
 {
@@ -14,9 +12,9 @@ namespace SRML.SR.SaveSystem.Data.Partial
         private Func<T> emptyValueCreator;
         private SerializerPair<T> serializer;
 
-        Dictionary<int,T> hoistedValues = new Dictionary<int, T>();
+        Dictionary<int, T> hoistedValues = new Dictionary<int, T>();
 
-        public PartialList(Predicate<T> hoistCondition, SerializerPair<T> serializer, Func<T> emptyValueCreator=null)
+        public PartialList(Predicate<T> hoistCondition, SerializerPair<T> serializer, Func<T> emptyValueCreator = null)
         {
             this.hoistCondition = hoistCondition;
             if (emptyValueCreator == null) emptyValueCreator = () => default(T);
@@ -33,7 +31,7 @@ namespace SRML.SR.SaveSystem.Data.Partial
             {
                 if (hoistCondition(data[i]))
                 {
-                    hoistedValues.Add(i,data[i]);
+                    hoistedValues.Add(i, data[i]);
                     data[i] = emptyValueCreator();
                 }
             }
@@ -49,12 +47,12 @@ namespace SRML.SR.SaveSystem.Data.Partial
 
         public override void Read(BinaryReader reader)
         {
-            BinaryUtils.ReadDictionary(reader,hoistedValues,(x)=>x.ReadInt32(),(x)=> (T)serializer.Deserialize(x));
+            BinaryUtils.ReadDictionary(reader, hoistedValues, (x) => x.ReadInt32(), (x) => (T)serializer.Deserialize(x));
         }
 
         public override void Write(BinaryWriter writer)
         {
-            BinaryUtils.WriteDictionary(writer,hoistedValues,(x,y)=>x.Write(y),(x,y)=>serializer.Serialize(x,y));
+            BinaryUtils.WriteDictionary(writer, hoistedValues, (x, y) => x.Write(y), (x, y) => serializer.Serialize(x, y));
         }
     }
 }

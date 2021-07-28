@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
 
 namespace SRML.Config.Parsing
 {
@@ -29,7 +26,7 @@ namespace SRML.Config.Parsing
 
         public static IStringParser GetParser(Type type)
         {
-            return type.IsArray?new ArrayParser(type):(type.IsEnum?GetEnumParser(type) : parsers[type]);
+            return type.IsArray ? new ArrayParser(type) : (type.IsEnum ? GetEnumParser(type) : parsers[type]);
         }
 
         public static bool TryGetParser(Type type, out IStringParser parser)
@@ -47,12 +44,12 @@ namespace SRML.Config.Parsing
 
         }
 
-        
+
 
         static IStringParser GetEnumParser(Type enumType)
         {
             if (!enumType.IsEnum) throw new Exception("Type is not an enum!");
-            if(!parsers.TryGetValue(enumType, out var parser))
+            if (!parsers.TryGetValue(enumType, out var parser))
             {
                 parser = new EnumStringParser(enumType);
                 parsers[enumType] = parser;

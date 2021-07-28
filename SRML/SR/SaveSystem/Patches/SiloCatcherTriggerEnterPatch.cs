@@ -1,10 +1,8 @@
 ﻿using HarmonyLib;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
-using System.Text;
 using UnityEngine;
 
 namespace SRML.SR.SaveSystem.Patches
@@ -17,9 +15,9 @@ namespace SRML.SR.SaveSystem.Patches
     {
         public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instr)
         {
-            foreach(var v in instr)
+            foreach (var v in instr)
             {
-                if(v.opcode == OpCodes.Call&&(v.operand as MethodInfo)?.Name == "Insert")
+                if (v.opcode == OpCodes.Call && (v.operand as MethodInfo)?.Name == "Insert")
                 {
                     yield return new CodeInstruction(OpCodes.Ldarg_1);
                     yield return new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(SiloCatcherTriggerEnterPatch), "Alternate"));

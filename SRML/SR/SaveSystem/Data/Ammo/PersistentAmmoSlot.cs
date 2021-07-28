@@ -1,21 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using UnityEngine;
 
 namespace SRML.SR.SaveSystem.Data.Ammo
 {
     internal class PersistentAmmoSlot
     {
-        private List<CompoundDataPiece> data= new List<CompoundDataPiece>();
+        private List<CompoundDataPiece> data = new List<CompoundDataPiece>();
 
         public int Count => data.Count;
 
         public void UpdateFromExistingSlot(global::Ammo.Slot slot, bool log = false)
         {
-            CompensateForExternalChanges(slot?.count ?? 0,log);
+            CompensateForExternalChanges(slot?.count ?? 0, log);
         }
 
         public CompoundDataPiece PopBottom()
@@ -39,7 +37,7 @@ namespace SRML.SR.SaveSystem.Data.Ammo
 
         public void PushBottom(CompoundDataPiece piece)
         {
-            data.Insert(0,piece);
+            data.Insert(0, piece);
         }
 
         public void PushTop(CompoundDataPiece piece)
@@ -59,7 +57,7 @@ namespace SRML.SR.SaveSystem.Data.Ammo
         {
             if (realAmount - Count != 0)
             {
-                if (log) Debug.Log("Compensating for an apparent ammo difference of "+(realAmount-Count)+" real amount: "+realAmount+" current count: "+Count);
+                if (log) Debug.Log("Compensating for an apparent ammo difference of " + (realAmount - Count) + " real amount: " + realAmount + " current count: " + Count);
             }
 
             while (realAmount > Count)
@@ -76,7 +74,7 @@ namespace SRML.SR.SaveSystem.Data.Ammo
 
         public bool HasNoData()
         {
-            foreach(var v in data)
+            foreach (var v in data)
                 if (v != null)
                     return false;
             return true;
@@ -109,7 +107,7 @@ namespace SRML.SR.SaveSystem.Data.Ammo
             writer.Write(data.Count);
             foreach (var piece in data)
             {
-                writer.Write(piece==null);
+                writer.Write(piece == null);
                 if (piece != null)
                 {
                     piece.Serialize(writer);
@@ -117,6 +115,6 @@ namespace SRML.SR.SaveSystem.Data.Ammo
             }
         }
 
-        
+
     }
 }

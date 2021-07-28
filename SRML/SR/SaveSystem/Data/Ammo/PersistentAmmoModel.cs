@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using UnityEngine;
 
 namespace SRML.SR.SaveSystem.Data.Ammo
 {
@@ -22,11 +19,11 @@ namespace SRML.SR.SaveSystem.Data.Ammo
 
         public void AdjustSlotCount(int newCount)
         {
-            var slotList = slots!=null?slots.ToList():new List<PersistentAmmoSlot>();
+            var slotList = slots != null ? slots.ToList() : new List<PersistentAmmoSlot>();
 
             while (slotList.Count > newCount)
             {
-                slotList.RemoveAt(slotList.Count-1);
+                slotList.RemoveAt(slotList.Count - 1);
             }
 
             while (slotList.Count < newCount)
@@ -37,12 +34,12 @@ namespace SRML.SR.SaveSystem.Data.Ammo
             slots = slotList.ToArray();
         }
 
-        public void UpdateFromExistingSlots(global::Ammo.Slot[] ammoSlots,bool log = false)
+        public void UpdateFromExistingSlots(global::Ammo.Slot[] ammoSlots, bool log = false)
         {
             AdjustSlotCount(ammoSlots.Length);
             for (int i = 0; i < ammoSlots.Length; i++)
             {
-                slots[i].UpdateFromExistingSlot(ammoSlots[i],log);
+                slots[i].UpdateFromExistingSlot(ammoSlots[i], log);
             }
         }
 
@@ -66,7 +63,7 @@ namespace SRML.SR.SaveSystem.Data.Ammo
             return slots[index].PopTop();
         }
 
-        public void PushDataForSlot(int index,CompoundDataPiece data)
+        public void PushDataForSlot(int index, CompoundDataPiece data)
         {
             slots[index].PushTop(data);
         }

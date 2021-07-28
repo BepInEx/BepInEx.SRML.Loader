@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using SRML.Utils;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -11,12 +7,12 @@ namespace SRML.SR.UI.Utils
 {
     public static class MainMenuUtils
     {
-        public static GameObject DisplayBlankPanel<T>(MainMenuUI mainMenu,string title,Action onClose=null) where T : BaseUI
+        public static GameObject DisplayBlankPanel<T>(MainMenuUI mainMenu, string title, Action onClose = null) where T : BaseUI
         {
             var h = GameObject.Instantiate(mainMenu.optionsUI);
             Component.DestroyImmediate(h.GetComponent<OptionsUI>());
 
-            for(int i = 0; i < h.transform.GetChild(0).childCount; i++)
+            for (int i = 0; i < h.transform.GetChild(0).childCount; i++)
             {
                 var v = h.transform.GetChild(0).GetChild(i).gameObject;
                 if (v.name == "CloseButton")
@@ -28,7 +24,7 @@ namespace SRML.SR.UI.Utils
                         onClose?.Invoke();
                     });
                 }
-                else if (v.name == "Title"&&title!=null)
+                else if (v.name == "Title" && title != null)
                 {
                     v.GetComponent<TMP_Text>().text = title;
                 }

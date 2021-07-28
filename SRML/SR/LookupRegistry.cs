@@ -37,14 +37,14 @@ namespace SRML.SR
                     objectsToPatch.Add(b);
                     break;
                 default:
-                    GameContext.Instance.LookupDirector.identifiablePrefabs.AddAndRemoveWhere(b,(x,y)=> Identifiable.GetId(x)== Identifiable.GetId(y));
+                    GameContext.Instance.LookupDirector.identifiablePrefabs.AddAndRemoveWhere(b, (x, y) => Identifiable.GetId(x) == Identifiable.GetId(y));
                     GameContext.Instance.LookupDirector.identifiablePrefabDict[Identifiable.GetId(b)] = b;
                     break;
             }
         }
 
         public static void RegisterIdentifiablePrefab(Identifiable b)
-        {   
+        {
             RegisterIdentifiablePrefab(b.gameObject);
         }
 
@@ -54,14 +54,14 @@ namespace SRML.SR
         /// <param name="entry"></param>
         public static void RegisterVacEntry(VacItemDefinition entry)
         {
-            
+
             switch (CurrentLoadingStep)
             {
                 case LoadingStep.PRELOAD:
                     vacEntriesToPatch.Add(entry);
                     break;
                 default:
-                    GameContext.Instance.LookupDirector.vacItemDefinitions.AddAndRemoveWhere(entry,(x,y)=>x.id==y.id);
+                    GameContext.Instance.LookupDirector.vacItemDefinitions.AddAndRemoveWhere(entry, (x, y) => x.id == y.id);
                     GameContext.Instance.LookupDirector.vacItemDict[entry.id] = entry;
                     break;
             }
@@ -78,7 +78,7 @@ namespace SRML.SR
                     landPlotsToPatch.Add(prefab);
                     break;
                 default:
-                    GameContext.Instance.LookupDirector.plotPrefabs.AddAndRemoveWhere(prefab,(x,y)=> x.GetComponentInChildren<LandPlot>(true).typeId== y.GetComponentInChildren<LandPlot>(true).typeId);
+                    GameContext.Instance.LookupDirector.plotPrefabs.AddAndRemoveWhere(prefab, (x, y) => x.GetComponentInChildren<LandPlot>(true).typeId == y.GetComponentInChildren<LandPlot>(true).typeId);
                     GameContext.Instance.LookupDirector.plotPrefabDict[prefab.GetComponentInChildren<LandPlot>(true).typeId] = prefab;
                     break;
             }
@@ -95,7 +95,7 @@ namespace SRML.SR
                     gadgetEntriesToPatch.Add(entry);
                     break;
                 default:
-                    GameContext.Instance.LookupDirector.gadgetDefinitions.AddAndRemoveWhere(entry,(x,y)=>x.id==y.id);
+                    GameContext.Instance.LookupDirector.gadgetDefinitions.AddAndRemoveWhere(entry, (x, y) => x.id == y.id);
                     GameContext.Instance.LookupDirector.gadgetDefinitionDict[entry.id] = entry;
                     break;
             }
@@ -108,7 +108,7 @@ namespace SRML.SR
         /// <param name="icon">Icon that will be used for the item in inventory</param>
         public static void RegisterVacEntry(Identifiable.Id id, Color color, Sprite icon)
         {
-            RegisterVacEntry(new VacItemDefinition(){id=id,color=color,icon=icon});
+            RegisterVacEntry(new VacItemDefinition() { id = id, color = color, icon = icon });
         }
         /// <summary>
         /// Register <paramref name="entry"/> into the <see cref="LookupDirector"/>
@@ -122,7 +122,7 @@ namespace SRML.SR
                     upgradeEntriesToPatch.Add(entry);
                     break;
                 default:
-                    GameContext.Instance.LookupDirector.upgradeDefinitions.AddAndRemoveWhere(entry,(x,y)=>x.upgrade==y.upgrade);
+                    GameContext.Instance.LookupDirector.upgradeDefinitions.AddAndRemoveWhere(entry, (x, y) => x.upgrade == y.upgrade);
                     GameContext.Instance.LookupDirector.upgradeDefinitionDict[entry.upgrade] = entry;
                     break;
             }
@@ -158,7 +158,7 @@ namespace SRML.SR
                     resourceSpawnersToPatch.Add(b);
                     break;
                 default:
-                    GameContext.Instance.LookupDirector.resourceSpawnerPrefabs.AddAndRemoveWhere(b,(x,y)=>x.GetComponent<SpawnResource>().id==y.GetComponent<SpawnResource>().id);
+                    GameContext.Instance.LookupDirector.resourceSpawnerPrefabs.AddAndRemoveWhere(b, (x, y) => x.GetComponent<SpawnResource>().id == y.GetComponent<SpawnResource>().id);
                     GameContext.Instance.LookupDirector.resourcePrefabDict[b.GetComponent<SpawnResource>().id] = b;
                     break;
             }
@@ -176,7 +176,7 @@ namespace SRML.SR
                     gordosToPatch.Add(gordo);
                     break;
                 default:
-                    GameContext.Instance.LookupDirector.gordoEntries.AddAndRemoveWhere(gordo,(x,y)=>x.GetComponent<GordoIdentifiable>().id==y.GetComponent<GordoIdentifiable>().id);
+                    GameContext.Instance.LookupDirector.gordoEntries.AddAndRemoveWhere(gordo, (x, y) => x.GetComponent<GordoIdentifiable>().id == y.GetComponent<GordoIdentifiable>().id);
                     GameContext.Instance.LookupDirector.gordoDict[gordo.GetComponent<GordoIdentifiable>().id] = gordo;
                     break;
             }
@@ -194,7 +194,7 @@ namespace SRML.SR
                     liquidsToPatch.Add(liquid);
                     break;
                 default:
-                    GameContext.Instance.LookupDirector.liquidDefinitions.AddAndRemoveWhere(liquid,(x,y)=>x.id==y.id);
+                    GameContext.Instance.LookupDirector.liquidDefinitions.AddAndRemoveWhere(liquid, (x, y) => x.id == y.id);
                     GameContext.Instance.LookupDirector.liquidDict[liquid.id] = liquid;
                     break;
             }
@@ -212,16 +212,16 @@ namespace SRML.SR
                     toysToPatch.Add(entry);
                     break;
                 default:
-                    GameContext.Instance.LookupDirector.toyDefinitions.AddAndRemoveWhere(entry,(x,y)=>x.toyId==y.toyId);
+                    GameContext.Instance.LookupDirector.toyDefinitions.AddAndRemoveWhere(entry, (x, y) => x.toyId == y.toyId);
                     GameContext.Instance.LookupDirector.toyDict[entry.toyId] = entry;
                     break;
             }
         }
 
-        internal static void AddAndRemoveWhere<T>(this ListAsset<T> list,T value,Func<T,T,bool> cond)
+        internal static void AddAndRemoveWhere<T>(this ListAsset<T> list, T value, Func<T, T, bool> cond)
         {
             var v = list.Where(x => cond(value, x)).ToList();
-            foreach(var a in v)
+            foreach (var a in v)
             {
                 list.items.Remove(a);
             }
@@ -235,7 +235,7 @@ namespace SRML.SR
         /// <param name="icon">Icon for the toy in the toy store</param>
         /// <param name="cost">How much the toy costs in the toy store</param>
         /// <param name="nameKey"></param>
-        public static void RegisterToy(Identifiable.Id id, Sprite icon, int cost,string nameKey)
+        public static void RegisterToy(Identifiable.Id id, Sprite icon, int cost, string nameKey)
         {
             RegisterToy(new ToyDefinition() { toyId = id, icon = icon, cost = cost, nameKey = nameKey });
         }

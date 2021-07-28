@@ -1,11 +1,7 @@
 ﻿using MonomiPark.SlimeRancher.DataModel;
 using SRML.SR.SaveSystem;
-using SRML.SR.Translation;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
 
 namespace SRML.SR
 {
@@ -17,7 +13,7 @@ namespace SRML.SR
 
         internal static IDRegistry<PlayerState.Upgrade> moddedUpgrades = new IDRegistry<PlayerState.Upgrade>();
 
-        internal static Dictionary<PlayerState.Upgrade,ApplyUpgradeDelegate> upgradeCallbacks = new Dictionary<PlayerState.Upgrade, ApplyUpgradeDelegate>();
+        internal static Dictionary<PlayerState.Upgrade, ApplyUpgradeDelegate> upgradeCallbacks = new Dictionary<PlayerState.Upgrade, ApplyUpgradeDelegate>();
 
         internal static Dictionary<PlayerState.Upgrade, CreateUpgradeLockerDelegate> moddedLockers =
             new Dictionary<PlayerState.Upgrade, CreateUpgradeLockerDelegate>();
@@ -32,7 +28,7 @@ namespace SRML.SR
         {
             if (SRModLoader.CurrentLoadingStep > SRModLoader.LoadingStep.PRELOAD)
                 throw new Exception("Can't register upgrades outside of the PreLoad step");
-            return moddedUpgrades.RegisterValueWithEnum((PlayerState.Upgrade) value, name);
+            return moddedUpgrades.RegisterValueWithEnum((PlayerState.Upgrade)value, name);
         }
 
         public static bool IsModdedUpgrade(PlayerState.Upgrade upgrade)
@@ -56,14 +52,14 @@ namespace SRML.SR
 
         public static void RegisterUpgradeLock(PlayerState.Upgrade upgrade, CreateUpgradeLockerDelegate del)
         {
-            moddedLockers.Add(upgrade,del);
+            moddedLockers.Add(upgrade, del);
         }
 
         public static void RegisterDefaultUpgrade(PlayerState.Upgrade upgrade)
         {
-            RegisterUpgradeLock(upgrade,null);
+            RegisterUpgradeLock(upgrade, null);
         }
 
-        
+
     }
 }

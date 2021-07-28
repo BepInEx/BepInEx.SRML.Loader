@@ -1,10 +1,7 @@
-﻿using SRML.SR;
-using SRML.SR.SaveSystem;
+﻿using SRML.SR.SaveSystem;
 using SRML.Utils;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 
 namespace SRML.SR.Utils

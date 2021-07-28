@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using UnityEngine;
 using System.Text.RegularExpressions;
+using UnityEngine;
 
 namespace SRML
 {

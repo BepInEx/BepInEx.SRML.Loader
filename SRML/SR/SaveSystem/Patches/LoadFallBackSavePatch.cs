@@ -1,14 +1,9 @@
-﻿using System;
-using System.CodeDom;
+﻿using HarmonyLib;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
-using System.Text;
-using HarmonyLib;
-using JetBrains.Annotations;
-using SRML.SR.SaveSystem.Format;
-using UnityEngine;
 
 namespace SRML.SR.SaveSystem.Patches
 {
@@ -21,12 +16,12 @@ namespace SRML.SR.SaveSystem.Patches
 
         public static MethodInfo TargetMethod()
         {
-            return AccessTools.Method(targetType,"MoveNext");
+            return AccessTools.Method(targetType, "MoveNext");
         }
 
         public static void LoadModSave(AutoSaveDirector director, GameData.Summary summary)
         {
-            SaveHandler.LoadModdedSave(director,summary.saveName);
+            SaveHandler.LoadModdedSave(director, summary.saveName);
         }
         public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
@@ -40,9 +35,9 @@ namespace SRML.SR.SaveSystem.Patches
                         yield return cur;
                         yield return new CodeInstruction(OpCodes.Ldarg_0);
 
-                        yield return new CodeInstruction(OpCodes.Ldfld, AccessTools.Field(targetType,"<>4__this"));
+                        yield return new CodeInstruction(OpCodes.Ldfld, AccessTools.Field(targetType, "<>4__this"));
                         yield return new CodeInstruction(OpCodes.Ldarg_0);
-                        yield return new CodeInstruction(OpCodes.Ldfld, AccessTools.Field(targetType,"<summary>5__5"));
+                        yield return new CodeInstruction(OpCodes.Ldfld, AccessTools.Field(targetType, "<summary>5__5"));
                         yield return new CodeInstruction(OpCodes.Call,
                             AccessTools.Method(typeof(LoadFallBackSavePatch), "LoadModSave"));
                     }

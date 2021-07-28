@@ -1,16 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Runtime;
-using SRML.Utils;
 
 namespace SRML.SR.SaveSystem
 {
     /// <summary>
     /// Class for handling string ID's for the save system
     /// </summary>
-    internal class StringRegistry : Dictionary<SRMod,HashSet<string>>
+    internal class StringRegistry : Dictionary<SRMod, HashSet<string>>
     {
         public string Prefix { get; }
         public StringRegistry(string prefix)
@@ -54,7 +50,7 @@ namespace SRML.SR.SaveSystem
             id = split[2];
             modid = split[1];
         }
-        
+
         public static bool IsLongForm(string longform)
         {
             return longform.Split('.').Length == 3;
@@ -63,11 +59,11 @@ namespace SRML.SR.SaveSystem
         public string RegisterID(string id, SRMod mod)
         {
 
-            GetIDsForMod(mod).Add(id); 
+            GetIDsForMod(mod).Add(id);
             return GetLongFormID(id, mod);
         }
 
-        public void UnRegisterID(string id,  SRMod mod)
+        public void UnRegisterID(string id, SRMod mod)
         {
             GetIDsForMod(mod).Remove(id);
         }
@@ -77,6 +73,6 @@ namespace SRML.SR.SaveSystem
             GetIDsForMod(mod).Clear();
         }
 
-       
+
     }
 }

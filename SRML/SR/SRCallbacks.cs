@@ -1,9 +1,5 @@
 ﻿using MonomiPark.SlimeRancher.DataModel;
 using SRML.SR.UI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 
 namespace SRML.SR
@@ -19,7 +15,7 @@ namespace SRML.SR
         public delegate void OnSaveGameLoadedDelegate(SceneContext t);
         public delegate void OnMainMenuLoadedDelegate(MainMenuUI mainMenu);
         public delegate void OnActorSpawnDelegate(Identifiable.Id id, GameObject obj, ActorModel model);
-        public delegate void OnActorDestroyedDelegate(Identifiable.Id id, GameObject obj,ActorModel model);
+        public delegate void OnActorDestroyedDelegate(Identifiable.Id id, GameObject obj, ActorModel model);
         public delegate void OnPediaEntrySelectedDelegate(PediaDirector.Id id);
         public delegate void OnPediaEntryUnlockedDelegate(PediaDirector.Id id);
         public delegate void OnProgressChangedDelegate(PediaDirector.Id id, int progress);
@@ -30,7 +26,7 @@ namespace SRML.SR
         public delegate void OnBlueprintUnlockedDelegate(Gadget.Id blueprint);
         public delegate void OnBlueprintPurchasedDelegate(Gadget.Id blueprint);
         internal delegate void OnGameContextReadyDelegate();
-            
+
         public static event OnSaveGameLoadedDelegate OnSaveGameLoaded;
         public static event OnSaveGameLoadedDelegate PreSaveGameLoaded;
         public static event OnMainMenuLoadedDelegate OnMainMenuLoaded;
@@ -53,7 +49,7 @@ namespace SRML.SR
             OnSaveGameLoaded?.Invoke(t);
         }
 
-        internal static void OnActorSpawnCallback(Identifiable.Id id,GameObject obj, ActorModel model)
+        internal static void OnActorSpawnCallback(Identifiable.Id id, GameObject obj, ActorModel model)
         {
             OnActorSpawn?.Invoke(id, obj, model);
         }

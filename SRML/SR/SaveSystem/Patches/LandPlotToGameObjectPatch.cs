@@ -1,15 +1,12 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Reflection.Emit;
-using HarmonyLib;
+﻿using HarmonyLib;
 using MonomiPark.SlimeRancher;
 using MonomiPark.SlimeRancher.DataModel;
 using MonomiPark.SlimeRancher.Persist;
 using SRML.SR.SaveSystem.Data.LandPlot;
-using SRML.Utils;
-using UnityEngine;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Reflection.Emit;
 
 namespace SRML.SR.SaveSystem.Patches
 {
@@ -23,13 +20,13 @@ namespace SRML.SR.SaveSystem.Patches
             foreach (var v in instr)
             {
                 if (v.opcode == OpCodes.Callvirt && v.operand is MethodInfo info && info.Name == "Remove")
-                { 
+                {
 
                     flag = true;
                     yield return v;
                     yield return new CodeInstruction(OpCodes.Pop);
                     yield return new CodeInstruction(OpCodes.Ldarg_1);
-                    yield return new CodeInstruction(OpCodes.Ldloca_S,0);
+                    yield return new CodeInstruction(OpCodes.Ldloca_S, 0);
                     yield return new CodeInstruction(OpCodes.Call,
                         AccessTools.Method(typeof(LandPlotToGameObjectPatch), "FixLandPlotModel"));
                 }
@@ -48,7 +45,7 @@ namespace SRML.SR.SaveSystem.Patches
         public static void FixLandPlotModel(LandPlotV08 data, ref LandPlotModel model)
         {
             var temp = model;
-            var potentialNew = DataModelRegistry.landPlotOverrides.FirstOrDefault(x=>x.Key(data.typeId));
+            var potentialNew = DataModelRegistry.landPlotOverrides.FirstOrDefault(x => x.Key(data.typeId));
             if (potentialNew.Value != null)
             {
                 model = potentialNew.Value();
@@ -61,12 +58,12 @@ namespace SRML.SR.SaveSystem.Patches
                 SceneContext.Instance.GameModel.landPlots[data.id] = model;
             }
 
-            if(data is CustomLandPlotData plot)
+            if (data is CustomLandPlotData plot)
             {
                 plot.PushCustomModel(model);
             }
         }
     }
 
-  
+
 }

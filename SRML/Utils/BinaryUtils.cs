@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 namespace SRML.Utils
 {
@@ -48,23 +46,23 @@ namespace SRML.Utils
             int count = reader.ReadInt32();
             for (int i = 0; i < count; i++)
             {
-                ReadTransform(reader,rend.bones[i]);
+                ReadTransform(reader, rend.bones[i]);
             }
             if (!rend.sharedMesh) rend.sharedMesh = new Mesh();
             ReadMesh(reader, rend.sharedMesh);
         }
         public static void WriteMesh(BinaryWriter writer, Mesh mesh)
         {
-            WriteArray(writer,mesh.vertices, (x, y) => WriteVector3(x, (Vector3) y));
-            WriteArray(writer,mesh.triangles,(x,y)=>x.Write((int)y));
-            WriteArray(writer,mesh.normals,(x,y)=>WriteVector3(x,(Vector3)y));
-            WriteArray(writer,mesh.colors, (x, y) => WriteColor(x, (Color)y));
-            WriteArray(writer,mesh.uv, (x, y) => WriteVector2(x, (Vector2) y));
-            WriteArray(writer,mesh.tangents,(x,y)=>WriteVector4(x,(Vector4)y));
-            WriteArray(writer,mesh.bindposes,(x,y)=>WriteMatrix4(x,(Matrix4x4)y));
-            WriteArray(writer,mesh.boneWeights,(x,y)=>WriteBoneWeight(x,(BoneWeight)y));
+            WriteArray(writer, mesh.vertices, (x, y) => WriteVector3(x, (Vector3)y));
+            WriteArray(writer, mesh.triangles, (x, y) => x.Write((int)y));
+            WriteArray(writer, mesh.normals, (x, y) => WriteVector3(x, (Vector3)y));
+            WriteArray(writer, mesh.colors, (x, y) => WriteColor(x, (Color)y));
+            WriteArray(writer, mesh.uv, (x, y) => WriteVector2(x, (Vector2)y));
+            WriteArray(writer, mesh.tangents, (x, y) => WriteVector4(x, (Vector4)y));
+            WriteArray(writer, mesh.bindposes, (x, y) => WriteMatrix4(x, (Matrix4x4)y));
+            WriteArray(writer, mesh.boneWeights, (x, y) => WriteBoneWeight(x, (BoneWeight)y));
 
-            
+
         }
 
         public static void ReadMesh(BinaryReader reader, Mesh mesh)
@@ -120,17 +118,17 @@ namespace SRML.Utils
         {
             return new Color(reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
         }
-        public static void WriteTransform(BinaryWriter writer,Transform transform)
+        public static void WriteTransform(BinaryWriter writer, Transform transform)
         {
             WriteVector3(writer, transform.localScale);
             WriteVector3(writer, transform.position);
             WriteQuaternion(writer, transform.rotation);
         }
 
-        public static void ReadTransform(BinaryReader reader,Transform trans)
+        public static void ReadTransform(BinaryReader reader, Transform trans)
         {
             trans.localScale = ReadVector3(reader);
-            trans.SetPositionAndRotation(ReadVector3(reader),ReadQuaternion(reader));
+            trans.SetPositionAndRotation(ReadVector3(reader), ReadQuaternion(reader));
         }
 
         public static void WriteQuaternion(BinaryWriter writer, Quaternion quat)
@@ -154,7 +152,7 @@ namespace SRML.Utils
         }
         public static Vector3 ReadVector3(BinaryReader reader)
         {
-            return new Vector3(reader.ReadSingle(),reader.ReadSingle(),reader.ReadSingle());
+            return new Vector3(reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
         }
 
         public static void WriteList<T>(BinaryWriter writer, List<T> list, Action<BinaryWriter, T> listWriter)
@@ -162,7 +160,7 @@ namespace SRML.Utils
             writer.Write(list.Count);
             foreach (var value in list)
             {
-                listWriter(writer,value);
+                listWriter(writer, value);
             }
         }
 
@@ -187,13 +185,13 @@ namespace SRML.Utils
             }
         }
 
-        public static void ReadDictionary<K, V>(BinaryReader reader, Dictionary<K, V> dict,Func<BinaryReader,K> keyReader, Func<BinaryReader,V> valueReader)
+        public static void ReadDictionary<K, V>(BinaryReader reader, Dictionary<K, V> dict, Func<BinaryReader, K> keyReader, Func<BinaryReader, V> valueReader)
         {
             dict.Clear();
             int count = reader.ReadInt32();
             for (int i = 0; i < count; i++)
             {
-                dict.Add(keyReader(reader),valueReader(reader));
+                dict.Add(keyReader(reader), valueReader(reader));
             }
         }
 
@@ -218,7 +216,7 @@ namespace SRML.Utils
 
         public static Vector4 ReadVector4(BinaryReader reader)
         {
-            return new Vector4(reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle(),reader.ReadSingle());
+            return new Vector4(reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
         }
 
         public static void WriteMatrix4(BinaryWriter writer, Matrix4x4 matrix)
@@ -227,7 +225,7 @@ namespace SRML.Utils
             {
                 WriteVector4(writer, matrix.GetColumn(i));
             }
-            
+
         }
 
         public static Matrix4x4 ReadMatrix4(BinaryReader reader)
@@ -235,7 +233,7 @@ namespace SRML.Utils
             return new Matrix4x4(ReadVector4(reader), ReadVector4(reader), ReadVector4(reader), ReadVector4(reader));
         }
 
-        public static void WriteArray(BinaryWriter writer, Array array, Action<BinaryWriter,object> writeAction)
+        public static void WriteArray(BinaryWriter writer, Array array, Action<BinaryWriter, object> writeAction)
         {
             writer.Write(array.Length);
             for (int i = 0; i < array.Length; i++)
@@ -250,13 +248,13 @@ namespace SRML.Utils
             T[] output = new T[length];
             for (int i = 0; i < length; i++)
             {
-                
+
                 output[i] = readAction(reader);
             }
 
             return output;
         }
-        
+
     }
 
     public class SerializerPair<T> : SerializerPair
@@ -271,18 +269,18 @@ namespace SRML.Utils
 
         public override void Serialize(BinaryWriter writer, object b)
         {
-            serializerFunc(writer, (T) b);
+            serializerFunc(writer, (T)b);
         }
 
         public void SerializeGeneric(BinaryWriter writer, T b)
         {
-            Serialize(writer,b);
+            Serialize(writer, b);
         }
 
         public T DeserializeGeneric(BinaryReader reader)
         {
-            return (T) Deserialize(reader);
-        } 
+            return (T)Deserialize(reader);
+        }
 
 
         private BinarySerializer<T> serializerFunc;
@@ -306,7 +304,7 @@ namespace SRML.Utils
     public abstract class SerializerPair
     {
         public abstract object Deserialize(BinaryReader reader);
-        public abstract void Serialize(BinaryWriter writer,object b);
+        public abstract void Serialize(BinaryWriter writer, object b);
         public abstract Type GetSerializedType();
         public static SerializerPair<K> GetEnumSerializerPair<K>()
         {

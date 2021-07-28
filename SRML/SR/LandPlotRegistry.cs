@@ -1,8 +1,5 @@
 ﻿using SRML.SR.SaveSystem;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 
 namespace SRML.SR
@@ -31,7 +28,7 @@ namespace SRML.SR
         {
             PurchasableUIRegistry.RegisterPurchasable<EmptyPlotUI>((x) =>
             {
-                return new PurchaseUI.Purchasable(entry.NameKey, entry.icon, entry.mainImg, entry.DescKey, entry.cost, entry.pediaId, () => x.BuyPlot(new LandPlotUI.PlotPurchaseItem() { icon = entry.icon, img = entry.mainImg, cost = entry.cost, plotPrefab = GameContext.Instance.LookupDirector.GetPlotPrefab(entry.plot) }), entry.isUnlocked??(() => true), () => true);
+                return new PurchaseUI.Purchasable(entry.NameKey, entry.icon, entry.mainImg, entry.DescKey, entry.cost, entry.pediaId, () => x.BuyPlot(new LandPlotUI.PlotPurchaseItem() { icon = entry.icon, img = entry.mainImg, cost = entry.cost, plotPrefab = GameContext.Instance.LookupDirector.GetPlotPrefab(entry.plot) }), entry.isUnlocked ?? (() => true), () => true);
             });
         }
 

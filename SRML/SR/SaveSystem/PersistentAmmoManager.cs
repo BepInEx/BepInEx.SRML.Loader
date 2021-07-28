@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using MonomiPark.SlimeRancher.DataModel;
-using SRML.SR.SaveSystem.Data;
+﻿using SRML.SR.SaveSystem.Data;
 using SRML.SR.SaveSystem.Data.Ammo;
 using SRML.SR.SaveSystem.Format;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-using static PlayerState;
 
 namespace SRML.SR.SaveSystem
 {
@@ -35,7 +30,7 @@ namespace SRML.SR.SaveSystem
 
         internal static void OnAmmoDecrement(AmmoIdentifier id, int slot, int count)
         {
-            PersistentAmmoData[id].OnDecrement(slot,count);
+            PersistentAmmoData[id].OnDecrement(slot, count);
             if (PersistentAmmoData[id].DataModel.HasNoData()) PersistentAmmoData.Remove(id);
         }
 
@@ -52,7 +47,7 @@ namespace SRML.SR.SaveSystem
             if (!PersistentAmmoData.ContainsKey(identifier))
             {
                 var newData = new PersistentAmmo(identifier, new PersistentAmmoModel(model));
-                PersistentAmmoData.Add(identifier,newData);
+                PersistentAmmoData.Add(identifier, newData);
                 newData.Sync();
             }
 
@@ -81,16 +76,16 @@ namespace SRML.SR.SaveSystem
 
         internal static void Push(ModdedSaveData data)
         {
-            foreach (var v in PersistentAmmoData.Where((x)=>!x.Value.DataModel.HasNoData()))
+            foreach (var v in PersistentAmmoData.Where((x) => !x.Value.DataModel.HasNoData()))
             {
-                data.ammoDataEntries.Add(new IdentifiableAmmoData(){identifier = v.Key,model = v.Value.DataModel});
+                data.ammoDataEntries.Add(new IdentifiableAmmoData() { identifier = v.Key, model = v.Value.DataModel });
             }
         }
 
         internal static void SyncAll()
         {
             List<AmmoIdentifier> invalidIdentifiers = new List<AmmoIdentifier>();
-            foreach(var v in PersistentAmmoData)
+            foreach (var v in PersistentAmmoData)
             {
                 try
                 {

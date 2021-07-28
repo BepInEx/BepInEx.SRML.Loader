@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using SRML.Console;
-using SRML.SR.Utils.Debug;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace SRML.SR.Templates.Plots
 {

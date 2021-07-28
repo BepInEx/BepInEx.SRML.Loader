@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using SRML.Console;
-using SRML.SR.Utils.Debug;
-using SRML.SR.Utils.BaseObjects;
+﻿using SRML.SR.Utils.BaseObjects;
 using UnityEngine;
 
 namespace SRML.SR.Templates.Misc

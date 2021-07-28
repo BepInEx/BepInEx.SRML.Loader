@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace SRML.Utils
+﻿namespace SRML.Utils
 {
-    public class Tuple<T1,T2>
+    public class Tuple<T1, T2>
     {
         public T1 Item1;
         public T2 Item2;

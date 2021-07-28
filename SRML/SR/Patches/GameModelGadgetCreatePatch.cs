@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using HarmonyLib;
+﻿using HarmonyLib;
 using MonomiPark.SlimeRancher.DataModel;
+using System.Linq;
 using UnityEngine;
 
 namespace SRML.SR.Patches
@@ -20,7 +17,7 @@ namespace SRML.SR.Patches
             if (_override.Value == null)
                 return true;
 
-            __result = _override.Value(site,gameObj);
+            __result = _override.Value(site, gameObj);
             return false;
         }
     }
