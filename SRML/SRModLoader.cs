@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using Newtonsoft.Json;
 using Exception = System.Exception;
 
 namespace SRML
@@ -300,14 +301,11 @@ namespace SRML
 
             public static ProtoMod ParseFromJson(String jsonData, string path)
             {
-                //var proto =
-                //    JsonConvert.DeserializeObject<ProtoMod>(jsonData);
-                //proto.path = Path.GetDirectoryName(path);
-                //proto.entryFile = path;
-                //proto.ValidateFields();
-                //return proto;
-
-                return null;
+                var proto = JsonConvert.DeserializeObject<ProtoMod>(jsonData);
+                proto.path = Path.GetDirectoryName(path);
+                proto.entryFile = path;
+                proto.ValidateFields();
+                return proto;
             }
 
             /// <summary>
